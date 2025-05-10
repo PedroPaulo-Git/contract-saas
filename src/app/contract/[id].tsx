@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Questionnaire from "../../../components/Questionnare";
 import PdfPreview from "../../../components/PdfPreview";
-import { AnswerData } from '../../../types';
+import { AnswerData } from "../../../types";
 
 //At the top level or in a types file
 
@@ -24,13 +24,13 @@ export default function ContractPage() {
     // Manage progress or API calls here
     console.log("Answers updated:", answers);
   }, [answers]);
-  const stringAnswers = answers.map(item => item.answer);
+  const stringAnswers = answers.map((item) => item.answer);
   return (
     <div className="p-6 flex">
       <div className="w-1/2">
-        <Questionnaire 
-          onAnswer={handleAnswer} 
-          layout={typeof layout === "string" ? layout : "Legal"} 
+        <Questionnaire
+          onAnswer={handleAnswer}
+          layout={typeof layout === "string" ? layout : "Legal"}
         />
       </div>
       <div className="w-1/2">
@@ -39,6 +39,11 @@ export default function ContractPage() {
           service={service as string}
           layout={layout as string}
           answers={stringAnswers}
+          config={{
+            h1Size: "22pt",
+            h2Size: "14pt",
+            receiveSize: "12pt",
+          }}
         />
       </div>
     </div>
