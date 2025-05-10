@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useRef, useState } from "react";
 // import { generatePdf } from "../lib/pdf";
-import html2pdf from "html2pdf.js";
+// import html2pdf from "html2pdf.js";
 import { PdfSettings } from "./PdfConfig";
 import { AnswerData } from "../types";
 import html2canvas from "html2canvas";
@@ -32,8 +32,8 @@ export interface ContractData {
 export type FindAnswerFn = (question: string) => string;
 
 export default function PdfPreview({ id, service, layout, answers,config  }: Props) {
-  const [url, setUrl] = useState("");
-  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+  // const [url, setUrl] = useState("");
+  // const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const pdfRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
