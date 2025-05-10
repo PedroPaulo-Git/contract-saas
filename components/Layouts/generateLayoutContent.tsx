@@ -124,10 +124,16 @@ export function generateLegalContent(data: ContractData, findAnswer: FindAnswerF
   ` + generateClosingSections(findAnswer, "Legal");
 }
 
-export function generateDefaultContent(data: ContractData, findAnswer: FindAnswerFn): string {
+export function generateEssayContent(data: ContractData, findAnswer: FindAnswerFn, service: string, layout: string): string {
+  const essayText = findAnswer("Essay text") || "No content provided.";
+
+  const formattedParagraphs = essayText
+    .split(/\n\s*\n/)
+    .map(paragraph => `<p class="paragrafy">${paragraph.trim()}</p>`)
+    .join("\n");
+
   return `
-    <div class="section-title">1. DEFAULT TEMPLATE</div>
-    <p class="paragrafy">No specific layout selected. Please choose a contract type.</p>
+    ${formattedParagraphs}
   `;
 }
 
@@ -135,32 +141,29 @@ export function generateDefaultContent(data: ContractData, findAnswer: FindAnswe
 
 
 
-
-
-
-function getLayoutContent(layout: string, findAnswer: (question: string) => string, service: string): string {
-    const baseData: ContractData = {
-      today: new Date().toLocaleDateString(),
-      clientName: findAnswer("Full legal name of client") || "__________",
-      freelancerName: findAnswer("Full legal name of freelancer") || "__________",
-      companyName: findAnswer("company legal name") || "__________",
-      projectType: findAnswer("Project type") || "__________",
-      projectDescription: findAnswer("Brief project description") || "__________",
-    };
+// function getLayoutContent(layout: string, findAnswer: (question: string) => string, service: string): string {
+//     const baseData: ContractData = {
+//       today: new Date().toLocaleDateString(),
+//       clientName: findAnswer("Full legal name of client") || "__________",
+//       freelancerName: findAnswer("Full legal name of freelancer") || "__________",
+//       companyName: findAnswer("company legal name") || "__________",
+//       projectType: findAnswer("Project type") || "__________",
+//       projectDescription: findAnswer("Brief project description") || "__________",
+//     };
   
-    switch (layout) {
-      case "NDA":
-        return generateNDAContent(baseData, findAnswer);
-      case "IP":
-        return generateIPContent(baseData, findAnswer);
-      case "Business":
-        return generateBusinessContent(baseData, findAnswer);
-      case "Service":
-        return generateServiceContent(baseData, findAnswer, service);
-      case "Legal":
-        return generateLegalContent(baseData, findAnswer);
-      default:
-        return generateDefaultContent(baseData, findAnswer);
-    }
-  }
+//     switch (layout) {
+//       case "NDA":
+//         return generateNDAContent(baseData, findAnswer);
+//       case "IP":
+//         return generateIPContent(baseData, findAnswer);
+//       case "Business":
+//         return generateBusinessContent(baseData, findAnswer);
+//       case "Service":
+//         return generateServiceContent(baseData, findAnswer, service);
+//       case "Legal":
+//         return generateLegalContent(baseData, findAnswer);
+//       default:
+//         return generateEssayContent(baseData, findAnswer,service,layout);
+//     }
+//   }
   

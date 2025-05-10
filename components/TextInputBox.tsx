@@ -11,7 +11,7 @@ export default function TextInputBox({ value, onChange }: Props) {
       className="w-full h-32 bg-[#1b263b] p-2 rounded shadow-md border border-[#415a77] focus:ring-0  focus:outline-none" 
       placeholder="Digite seu texto aqui..."
       value={value}
-      onChange={e => onChange(e.target.value)}
+      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange(e.target.value)}
     />
   );
 }

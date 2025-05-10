@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AnswerData } from "../types";
+import TextInputBox from "./TextInputBox";
 
 interface Props {
   onAnswer: (data: AnswerData) => void;
@@ -8,7 +9,7 @@ interface Props {
 
 interface Question {
   text: string;
-  type: "text" | "select" | "date" | "checkbox";
+  type: "text" | "select" | "date" | "checkbox" | "textarea";
   options?: string[];
   required?: boolean;
   placeholder?: string;
@@ -130,28 +131,27 @@ const questionSets: Record<string, Question[]> = {
       ],
     },
   ],
-  Custom: [
-    {
-      text: "Project title",
+  Default: [
+     {
+      text: "Title",
+      type: "text",
+      required: true,
+    },
+     {
+      text: "SubTitle",
       type: "text",
       required: false,
     },
     {
-      text: "Expected completion date",
-      type: "date",
-    },
-    {
-      text: "Project type",
-      type: "select",
-      options: [
-        "Web development",
-        "Marketing campaign",
-        "Research project",
-        "Event planning",
-        "Content production",
-      ],
+      text: "Essay text",
+      type: "textarea",
+      required: true,
     },
   ],
+
+
+
+
   Service: [
     {
       text: "Full legal name of client",
@@ -258,6 +258,7 @@ export default function Questionnaire({ onAnswer, layout }: Props) {
       question: currentQuestion.text,
       answer: answerValue,
     });
+    console.log("answer :",answerValue)
     setValue("");
     setStep((prev) => Math.min(prev + 1, questions.length - 1));
   }
@@ -269,7 +270,8 @@ export default function Questionnaire({ onAnswer, layout }: Props) {
           <div className="flex justify-between">
             <h4 className="question-title">
               {currentQuestion.text}{" "}
-              {currentQuestion.required && <span className="required">*</span>}
+              {!currentQuestion.required && <span className="required">(Optional)</span>}
+             {currentQuestion.required && <span className="required">*</span>}
             </h4>
             <div className="progress-indicator">
               {step + 1} of {questions.length}
@@ -286,7 +288,9 @@ export default function Questionnaire({ onAnswer, layout }: Props) {
               className="input-text border border-[#415a77] mt-2"
             />
           )}
-
+          {currentQuestion.type === "textarea" && (
+            <TextInputBox value={value} onChange={setValue} />
+          )}
           {currentQuestion.type === "select" && (
             <select
               value={value || defaultValue}
@@ -309,7 +313,7 @@ export default function Questionnaire({ onAnswer, layout }: Props) {
               disabled={!value && currentQuestion.required}
               className="next-button px-3 py-1 mt-2 bg-[#415a77]"
             >
-              {step < questions.length - 1 ? "Next" : "Finish"}
+              {step < questions.length ? "Next" : "Finish"}
             </button>
           </div>
         </>
