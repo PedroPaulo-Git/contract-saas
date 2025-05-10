@@ -124,7 +124,7 @@ export function generateLegalContent(data: ContractData, findAnswer: FindAnswerF
   ` + generateClosingSections(findAnswer, "Legal");
 }
 
-export function generateEssayContent(data: ContractData, findAnswer: FindAnswerFn, _service: string, _layout: string): string {
+export function generateEssayContent(data: ContractData, findAnswer: FindAnswerFn): string {
   const essayText = findAnswer("Essay text") || "No content provided.";
 
   const formattedParagraphs = essayText
