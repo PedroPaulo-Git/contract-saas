@@ -81,7 +81,7 @@ export default function PdfPreview({ id, service, layout, answers,config  }: Pro
       case "Legal":
         return generateLegalContent(baseData, findAnswer);
       default:
-        return generateEssayContent(baseData, findAnswer, service, layout);
+        return generateEssayContent(baseData, findAnswer);
     }
   }
 
