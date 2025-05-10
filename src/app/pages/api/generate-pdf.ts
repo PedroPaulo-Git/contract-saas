@@ -1,16 +1,14 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { generatePdf } from "../../../../lib/pdf";
+import { NextRequest, NextResponse } from "next/server";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { html } = req.body;
-  try {
-    const file = await generatePdf(html);
-    res.setHeader("Content-Type", "application/pdf");
-    res.send(file);
-  } catch (err) {
-    res.status(500).json({ error: "Erro ao gerar PDF" });
-  }
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const pdfBuffer = await generatePdf(body);
+
+  return new NextResponse(pdfBuffer, {
+    headers: {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": 'attachment; filename="document.pdf"',
+    },
+  });
 }

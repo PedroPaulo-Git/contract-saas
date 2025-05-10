@@ -6,6 +6,7 @@ import TextInputBox from "../../components/TextInputBox";
 import LayoutSelector from "../../components/LayoutSelector";
 import PopupServiceSelector from "../../components/PopupServiceSelector";
 import { useRouter } from "next/navigation";
+import Footer from "../../components/Footer";
 
 export default function Home() {
   const [text, setText] = useState("");
@@ -23,8 +24,10 @@ export default function Home() {
   }
 
   return (
+    <>
+    <Header />
     <div className="p-6 bg-[#14213d] text-white">
-      <Header />
+    
       <h1 className="text-2xl mb-4">Gere seu PDF gratuitamente</h1>
       <TextInputBox value={text} onChange={setText} />
       <div className="text-center">
@@ -46,5 +49,7 @@ export default function Home() {
         />
       )}
     </div>
+    <Footer/>
+    </>
   );
 }

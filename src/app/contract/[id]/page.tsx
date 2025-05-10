@@ -4,6 +4,9 @@ import { useSearchParams, useParams } from 'next/navigation';
 import { useState } from 'react';
 import Questionnaire from '../../../../components/Questionnare';
 import PdfPreview from '../../../../components/PdfPreview';
+import { AnswerData } from '../../../../types';
+import Header from '../../../../components/Header';
+import Footer from '../../../../components/Footer';
 
 export default function ContractPage() {
   const searchParams = useSearchParams();
@@ -14,22 +17,23 @@ export default function ContractPage() {
   const id = params?.id as string;
   
   // Default to 'Legal' if no layout is provided or if it's invalid
-  const validLayouts = ['Legal', 'Business', 'Custom'];
-  const layout = layoutParam && validLayouts.includes(layoutParam) 
+  // const validLayouts = ['Legal', 'Business', 'Custom'];
+  const layout = layoutParam
     ? layoutParam 
     : 'Legal';
   
-  const [answers, setAnswers] = useState<string[]>([]);
+    const [answers, setAnswers] = useState<AnswerData[]>([]);
 
-  function handleAnswer(newAnswer: string) {
-    setAnswers((prev) => [...prev, newAnswer]);
-  }
-
+    const handleAnswer = (answerData: AnswerData) => {
+      setAnswers((prev) => [...prev, answerData]);
+    };
   if (!id) {
     return <div>Loading...</div>;
   }
 
   return (
+    <>
+    <Header/>
     <div className="min-h-screen bg-[#0d1b2a] text-slate-200 p-6 space-y-6">
       {/* Header */}
       <div className="bg-[#1b263b] p-4 rounded shadow-md border border-[#415a77]">
@@ -47,9 +51,11 @@ export default function ContractPage() {
 
         {/* Preview */}
         <div className="bg-[#1b263b] p-4 rounded shadow-md border border-[#415a77]">
-          <PdfPreview id={id} service={service} layout={layout} answers={answers} />
+          <PdfPreview id={id} service={service} layout={layout}  answers={answers as unknown as AnswerData[]} />
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
