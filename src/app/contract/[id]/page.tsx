@@ -3,7 +3,7 @@
 import { useSearchParams, useParams } from 'next/navigation';
 import { useState } from 'react';
 import Questionnaire from '../../../../components/Questionnare';
-import PdfConfig, { PdfSettings } from '../../../../components/PdfConfig';
+import { PdfSettings } from '../../../../components/PdfConfig';
 import PdfPreview from '../../../../components/PdfPreview';
 import { AnswerData } from '../../../../types';
 import Header from '../../../../components/Header';
