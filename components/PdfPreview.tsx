@@ -161,7 +161,7 @@ export default function PdfPreview({
                 .receive{
                 font-size: ${isPDF ? config.receiveSize : "0.6rem"}
                 }
-                .paragrafy { font-size: 0.6rem; }
+               
                 .section-title {  font-size: ${isPDF ? "14pt" : "0.8rem"}}
               }
         </style>
