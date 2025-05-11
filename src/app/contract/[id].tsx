@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Questionnaire from "../../../components/Questionnare";
 import PdfPreview from "../../../components/PdfPreview";
 import { AnswerData } from "../../../types";
+import { PdfSettings } from "../../../components/PdfConfig";
 
 //At the top level or in a types file
 
@@ -19,7 +20,15 @@ export default function ContractPage() {
   const handleAnswer = (answerData: AnswerData) => {
     setAnswers((prev) => [...prev, answerData]);
   };
+  const [pdfSettings, setPdfSettings] = useState<PdfSettings>({
+  h1Size: "22pt",
+  h2Size: "14pt",
+  receiveSize: "12pt",
+});
 
+  const handlePdfSettingsChange = (settings: PdfSettings) => {
+    setPdfSettings(settings);
+  };
   useEffect(() => {
     // Manage progress or API calls here
     console.log("Answers updated:", answers);
@@ -29,6 +38,8 @@ export default function ContractPage() {
     <div className="p-6 flex">
       <div className="w-1/2">
         <Questionnaire
+          pdfSettings={pdfSettings}
+          onPdfSettingsChange={handlePdfSettingsChange}
           onAnswer={handleAnswer}
           layout={typeof layout === "string" ? layout : "Legal"}
         />

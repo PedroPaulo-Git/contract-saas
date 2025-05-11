@@ -237,7 +237,7 @@ const questionSets: Record<string, Question[]> = {
 };
 
 // Auto-fill values for dates and common selections
-export default function Questionnaire({ onAnswer, layout,onPdfSettingsChange, pdfSettings }: Props) {
+export default function Questionnaire({ onAnswer, layout,onPdfSettingsChange }: Props) {
   const autoFillValues = {
     date: new Date().toISOString().split("T")[0],
     defaultSelections: {
