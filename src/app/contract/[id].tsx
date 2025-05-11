@@ -41,7 +41,7 @@ export default function ContractPage() {
           pdfSettings={pdfSettings}
           onPdfSettingsChange={handlePdfSettingsChange}
           onAnswer={handleAnswer}
-          layout={typeof layout === "string" ? layout : "Legal"}
+          layout={typeof layout === "string" ? layout : "Default"}
         />
       </div>
       <div className="w-1/2">

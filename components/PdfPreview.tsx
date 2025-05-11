@@ -12,7 +12,7 @@ import {
   generateServiceContent,
   generateLegalContent,
   generateEssayContent,
-} from "./Layouts/generateLayoutContent";
+} from "./Contract/generateLayoutContent";
 
 interface Props {
   id: string;
@@ -116,7 +116,11 @@ export default function PdfPreview({
             font-family: ${isPDF ? "'Times New Roman', serif" : "sans-serif"};
           }
                .pdf {color:black; padding:  ${isPDF ? "0.5cm" : "1.5cm"} }
-          
+               .paragrafy {
+                margin-top: 0;
+                margin-bottom: 0; /* ou 1em, se quiser mais espaço */
+                line-height: 1.6;
+            }
        
           h1 {
             text-align: center;
@@ -141,6 +145,7 @@ export default function PdfPreview({
             font-size: ${isPDF ? config.receiveSize : "0.9rem"};
             text-align: justify;
             margin-bottom: 8px;
+            text-indent: 2em;
           }
           .footer {
             margin-top: 50px;
@@ -155,7 +160,11 @@ export default function PdfPreview({
                  body { padding: 0cm; }
                 .pdf { padding:  ${isPDF ? "0.5cm" : "1cm"} }
                  .pdf {  overflow-y: auto; }
-                
+                .paragrafy {
+  margin-top: 0;
+  margin-bottom: 0; /* ou 1em, se quiser mais espaço */
+  line-height: 1.6;
+}
                 h1 { font-size: ${isPDF ? config.h1Size : "1rem"} }
                 h2 { font-size: ${isPDF ? config.h2Size : "0.6rem"} }
                 .receive{

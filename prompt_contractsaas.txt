@@ -1,0 +1,499 @@
+veja mais o menos como esta estruturado o meu projeto, analise direito por favor, se possivel cada detalhe e me diga passo a passo oq melhorar, seja didatico, gostei dessa sua forma, porem adapte ao q eu ja tenho:
+
+
+// types.ts
+export interface ContractData {
+    today: string;
+    clientName: string;
+    freelancerName: string;
+    companyName: string;
+    projectType: string;
+    projectDescription: string;
+  }
+  
+export type FindAnswerFn = (question: string) => string;
+
+export function generateClosingSections(findAnswer: FindAnswerFn, layout: string): string {
+  const paymentIndex = layout === "Legal" ? 6 : 5;
+  const signatureIndex = paymentIndex + 1;
+  const generalIndex = signatureIndex + 1;
+
+  return `
+    <div class="section-title">${paymentIndex}. PAYMENT TERMS</div>
+    <p class="paragrafy"><strong>Payment Method:</strong> ${findAnswer("payment method")}</p>
+    <p class="paragrafy">Payment shall be made as follows: 50% upfront, 50% upon completion.</p>
+
+    <div class="section-title">${signatureIndex}. SIGNATURES</div>
+    <div class="signature-block">
+      <div class="signature-line">
+        <p class="paragrafy">__________________________</p>
+        <p class="paragrafy">Service Provider Signature</p>
+        <p class="paragrafy">Date: __________________</p>
+      </div>
+      <div class="signature-line">
+        <p class="paragrafy">__________________________</p>
+        <p class="paragrafy">Client Signature</p>
+        <p class="paragrafy">Date: __________________</p>
+      </div>
+    </div>
+
+    <div class="section-title">${generalIndex}. GENERAL PROVISIONS</div>
+    <p class="paragrafy">This agreement constitutes the entire understanding between the parties.</p>
+    <p class="paragrafy">Any amendments must be made in writing and signed by both parties.</p>
+  `;
+}
+
+export function generateNDAContent(data: ContractData, findAnswer: FindAnswerFn): string {
+  return `
+    <div class="section-title">1. PARTIES</div>
+    <p class="paragrafy">
+      This Non-Disclosure Agreement ("Agreement") is entered into as of ${data.today} between:
+    </p>
+    <p class="paragrafy"><strong>Disclosing Party:</strong> ${data.clientName}</p>
+    <p class="paragrafy"><strong>Receiving Party:</strong> ${data.freelancerName}</p>
+
+    <div class="section-title">2. CONFIDENTIAL INFORMATION</div>
+    <p class="paragrafy">
+      The parties agree to protect confidential information, including but not limited to trade secrets, business strategies, and proprietary data.
+    </p>
+  ` + generateClosingSections(findAnswer, "NDA");
+}
+
+// Outros layouts (IP, Business, etc) seguem o mesmo padrão:
+
+export function generateIPContent(data: ContractData, findAnswer: FindAnswerFn): string {
+  return `
+    <div class="section-title">1. OWNERSHIP</div>
+    <p class="paragrafy">
+      The intellectual property developed during the project remains with the creator unless otherwise agreed.
+    </p>
+  ` + generateClosingSections(findAnswer, "IP");
+}
+
+export function generateBusinessContent(data: ContractData, findAnswer: FindAnswerFn): string {
+  return `
+    <div class="section-title">1. SCOPE OF WORK</div>
+    <p class="paragrafy">
+      ${data.projectDescription}
+    </p>
+  ` + generateClosingSections(findAnswer, "Business");
+}
+export function generateServiceContent(
+  data: ContractData,
+  findAnswer: FindAnswerFn,
+  service: string
+): string {
+  return `
+    <div class="section-title">1. PARTIES INVOLVED</div>
+    <p class="paragrafy">
+      This Service Agreement is made between the following parties:
+    </p>
+    <p class="paragrafy"><strong>Client:</strong> ${findAnswer("Full legal name of client") || '[Client Name]'}</p>
+    <p class="paragrafy"><strong>Freelancer:</strong> ${findAnswer("Full legal name of freelancer") || '[Freelancer Name]'}</p>
+
+    <div class="section-title">2. PROJECT OVERVIEW</div>
+    <p class="paragrafy">
+      The freelancer agrees to perform the following service: <strong>${service}</strong>, which falls under the category of <strong>${findAnswer("Project type") || '[Project Type]'}</strong>.
+    </p>
+    <p class="paragrafy">
+      Project description: ${findAnswer("Brief project description") || '[Description Not Provided]'}
+    </p>
+
+    <div class="section-title">3. TIMELINE</div>
+    <p class="paragrafy">
+      The project will commence on <strong>${findAnswer("Start date") || '[Start Date]'}</strong> and is expected to end on <strong>${findAnswer("End date") || '[End Date]'}</strong>. 
+      The estimated completion date is <strong>${findAnswer("Expected completion date") || '[Expected Date]'}</strong>.
+    </p>
+
+    <div class="section-title">4. COMMUNICATION & REVISIONS</div>
+    <p class="paragrafy">
+      Communication between the parties will be conducted primarily via <strong>${findAnswer("Communication method") || '[Method Not Specified]'}</strong>. 
+      Response time is expected to be within <strong>${findAnswer("Response time (e.g., within 24 hours)") || '[Response Time]'}</strong>.
+    </p>
+    <p class="paragrafy">
+      The freelancer offers the following revision policy: <strong>${findAnswer("Revision policy (e.g., 2 rounds included)") || '[Policy Not Specified]'}</strong>.
+    </p>
+  ` + generateClosingSections(findAnswer, "Service");
+}
+
+
+export function generateLegalContent(data: ContractData, findAnswer: FindAnswerFn): string {
+  return `
+    <div class="section-title">1. LEGAL TERMS</div>
+    <p class="paragrafy">
+      Both parties agree to comply with local, state, and federal regulations.
+    </p>
+  ` + generateClosingSections(findAnswer, "Legal");
+}
+
+export function generateEssayContent(data: ContractData, findAnswer: FindAnswerFn): string {
+  const essayText = findAnswer("Essay text") || "No content provided.";
+
+  const formattedParagraphs = essayText
+    .split(/\n\s*\n/)
+    .map(paragraph => `<p class="paragrafy">${paragraph.trim()}</p>`)
+    .join("\n");
+
+  return `
+    ${formattedParagraphs}
+  `;
+}
+
+
+
+
+
+// function getLayoutContent(layout: string, findAnswer: (question: string) => string, service: string): string {
+//     const baseData: ContractData = {
+//       today: new Date().toLocaleDateString(),
+//       clientName: findAnswer("Full legal name of client") || "__________",
+//       freelancerName: findAnswer("Full legal name of freelancer") || "__________",
+//       companyName: findAnswer("company legal name") || "__________",
+//       projectType: findAnswer("Project type") || "__________",
+//       projectDescription: findAnswer("Brief project description") || "__________",
+//     };
+  
+//     switch (layout) {
+//       case "NDA":
+//         return generateNDAContent(baseData, findAnswer);
+//       case "IP":
+//         return generateIPContent(baseData, findAnswer);
+//       case "Business":
+//         return generateBusinessContent(baseData, findAnswer);
+//       case "Service":
+//         return generateServiceContent(baseData, findAnswer, service);
+//       case "Legal":
+//         return generateLegalContent(baseData, findAnswer);
+//       default:
+//         return generateEssayContent(baseData, findAnswer,service,layout);
+//     }
+//   }
+  
+
+
+
+import React, { useEffect, useState } from 'react';
+import pdf1 from '../pdf1.webp';
+import pdf2 from '../pdf2.webp';
+import pdf3 from '../pdf3.png';
+
+interface Props {
+  onSelect: (layout: string) => void;
+}
+
+const layouts = [
+  {
+    name: 'Default',
+    service: 'Default',
+    preview: 'This contract is made between Party A and Party B. The terms and conditions are as follows...',
+    pdf: pdf1
+  },
+  {
+    name: 'Service Agreement',
+    service: 'Service',
+    preview: 'This contract is made between Party A and Party B. The terms and conditions are as follows...',
+    pdf: pdf1
+  },
+  {
+    name: 'Non-Disclosure Agreement (NDA)',
+    service: 'NDA',
+    preview: 'This agreement is made for the sale of goods. The seller agrees to deliver the goods as described...',
+    pdf: pdf2
+  },
+  {
+    name: 'Intellectual Property License Agreement',
+    service: 'IP',
+    preview: 'Preview of contract C...',
+    pdf: pdf3
+  },
+];
+
+export default function LayoutSelector({ onSelect }: Props) {
+  const [layoutSelected, setLayoutSelected] = useState<string>('Default');
+  useEffect(() => {
+    //console.log(layoutSelected)
+    onSelect(layoutSelected);
+  }, []); // Esse effect só roda uma vez, após a primeira renderização
+
+  function handleClick(service:string) {
+    // if(name != "Default"){
+    //   console.log("isnt a Essay ")
+    //   setLayoutSelected("Legal");
+    //   onSelect("Legal");
+    // }else{
+    //   setLayoutSelected(name);
+    //   onSelect(name);
+    // }
+    console.log(layoutSelected)
+    // const convertLayout = name;
+
+    setLayoutSelected(service);
+    onSelect(service);
+   // console.log(name)
+  }
+
+  return (
+    <>
+    <h1 className='text-center text-2xl mt-4'>Select a Layout </h1>
+    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+     
+      
+      {layouts.map(l => (
+        <div
+          key={l.name}
+          className="p-0 bg-[#14213d] rounded-lg cursor-pointer transform transition duration-200 text-center hover:scale-105 hover:shadow-2xl"
+          onClick={() => handleClick(l.service)}
+        >
+          {/* <h4 className="text-sm font-semibold mb-4">{l.name}</h4> */}
+
+          <div className={`relative bg-white p-4 rounded-lg w-full h-[2in] max-w-[1.5in] mx-auto shadow-md
+            border-4 ${layoutSelected === l.service ? 'border-red-500' : 'border-gray-300'}`}>
+            <div className="absolute inset-0 rounded-md">
+              <div className="h-full text-sm relative">
+                <h5 className="font-semibold text-lg mb-4 absolute top-1/2 left-1/2 transform 
+                  -translate-x-1/2 -translate-y-1/2 bg-gray-500 opacity-50 w-[95%] text-center">
+                  Preview
+                </h5>
+                <img src={l.pdf.src} alt="Preview" className="w-full h-full rounded" />
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    </>
+  );
+}
+
+
+
+
+
+
+
+
+import React,{useEffect} from 'react';
+import { X } from 'lucide-react'; // ícone de fechar, certifique-se que tem 'lucide-react' instalado
+
+interface Props {
+  onSelect: (service: string) => void;
+  onClose: () => void;
+}
+
+const services = [
+  {
+    name: 'Essay (Free Writing)',
+    service: 'None',
+    description: 'Write a personalized document without predefined structure or legal format.'
+  },
+  { 
+    name: 'Freelance Agreement', 
+    service: 'Service',
+    description: 'For freelance projects, covering scope, deadlines, and payment terms.'
+  },
+  { 
+    name: 'NDA (Non-Disclosure)', 
+    service: 'NDA',
+    description: 'Protect confidential information in business deals or partnerships.'
+  },
+  { 
+    name: 'Service Contract', 
+    service: 'IP',
+    description: 'Ideal for recurring services or custom business arrangements.'
+  },
+];
+
+
+export default function PopupServiceSelector({ onSelect, onClose }: Props) {
+  useEffect(() => {
+    console.log(onSelect)
+    // Impede o scroll do fundo
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      // Libera o scroll ao fechar o popup
+      document.body.style.overflow = '';
+    };
+  }, []);
+  
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
+      <div className="relative bg-[#1b263b] p-4 rounded shadow-md border border-[#415a77] mx-2">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-200 hover:text-red-500 rounded-full p-1"
+          aria-label="Close"
+        >
+          <X size={20} />
+        </button>
+
+        <h3 className="text-xl font-bold text-center mb-6">Select the Type of Service</h3>
+
+        <div className="space-y-4">
+          {services.map(service => (
+            <button
+              key={service.name}
+              onClick={() => onSelect(service.name)}
+              className="w-full text-left p-4 border border-[#415a77] rounded-lg hover:border-[#415a77] hover:bg-blue-50 transition duration-200"
+            >
+              <div className="font-semibold text-cyan-500">{service.name}</div>
+              <div className="text-sm text-gray-100">{service.description}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Questionnaire from "../../../components/Questionnare";
+import PdfPreview from "../../../components/PdfPreview";
+import { AnswerData } from "../../../types";
+import { PdfSettings } from "../../../components/PdfConfig";
+
+//At the top level or in a types file
+
+interface ContractPageQuery {
+  id?: string;
+  service?: string;
+  layout?: string;
+}
+export default function ContractPage() {
+  const router = useRouter();
+  const { id, service, layout } = router.query as ContractPageQuery;
+  const [answers, setAnswers] = useState<AnswerData[]>([]);
+
+  const handleAnswer = (answerData: AnswerData) => {
+    setAnswers((prev) => [...prev, answerData]);
+  };
+  const [pdfSettings, setPdfSettings] = useState<PdfSettings>({
+  h1Size: "22pt",
+  h2Size: "14pt",
+  receiveSize: "12pt",
+});
+
+  const handlePdfSettingsChange = (settings: PdfSettings) => {
+    setPdfSettings(settings);
+  };
+  useEffect(() => {
+    // Manage progress or API calls here
+    console.log("Answers updated:", answers);
+  }, [answers]);
+  const stringAnswers = answers.map((item) => item.answer);
+  return (
+    <div className="p-6 flex">
+      <div className="w-1/2">
+        <Questionnaire
+          pdfSettings={pdfSettings}
+          onPdfSettingsChange={handlePdfSettingsChange}
+          onAnswer={handleAnswer}
+          layout={typeof layout === "string" ? layout : "Legal"}
+        />
+      </div>
+      <div className="w-1/2">
+        <PdfPreview
+          id={id as string}
+          service={service as string}
+          layout={layout as string}
+          answers={stringAnswers}
+          config={{
+            h1Size: "22pt",
+            h2Size: "14pt",
+            receiveSize: "12pt",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+
+
+
+'use client'
+
+import { useSearchParams, useParams } from 'next/navigation';
+import { useState } from 'react';
+import Questionnaire from '../../../../components/Questionnare';
+import { PdfSettings } from '../../../../components/PdfConfig';
+import PdfPreview from '../../../../components/PdfPreview';
+import { AnswerData } from '../../../../types';
+import Header from '../../../../components/Header';
+import Footer from '../../../../components/Footer';
+
+export default function ContractPage() {
+  const [pdfSettings, setPdfSettings] = useState<PdfSettings>({
+  h1Size: '22pt',
+  h2Size: '14pt',
+  receiveSize: '12pt',
+});
+
+
+
+  const searchParams = useSearchParams();
+  const params = useParams();
+  
+  const service = searchParams.get('service') || 'Freelance Agreement';
+  const layoutParam = searchParams.get('layout');
+  const id = params?.id as string;
+  
+  // Default to 'Legal' if no layout is provided or if it's invalid
+  // const validLayouts = ['Legal', 'Business', 'Custom'];
+  const layout = layoutParam
+    ? layoutParam 
+    : 'Legal';
+  
+    const [answers, setAnswers] = useState<AnswerData[]>([]);
+
+    const handleAnswer = (answerData: AnswerData) => {
+      setAnswers((prev) => [...prev, answerData]);
+    };
+  if (!id) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <>
+    <Header/>
+    <div className="min-h-screen bg-[#0d1b2a] text-slate-200 p-6 space-y-6">
+      {/* Header */}
+      <div className="bg-[#1b263b] p-4 rounded shadow-md border border-[#415a77]">
+        <h1 className="text-2xl font-bold text-white">Contract ID: {id}</h1>
+        <p className="text-sm text-slate-300">Service: {service}</p>
+        <p className="text-sm text-slate-300">Layout: {layout}</p>
+      </div>
+
+      {/* Grid */}
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Perguntas */}
+        <div className="bg-[#1b263b] p-4 rounded shadow-md border border-[#415a77]">
+          <Questionnaire
+  onAnswer={handleAnswer}
+  layout={layout}
+  pdfSettings={pdfSettings}
+  onPdfSettingsChange={setPdfSettings}
+/>
+
+          {/* <PdfConfig onConfigChange={setPdfSettings} /> */}
+        </div>
+
+        {/* Preview */}
+        <div className="bg-[#1b263b] p-4 rounded shadow-md border border-[#415a77]">
+          <PdfPreview id={id} service={service} layout={layout}  
+          answers={answers as unknown as AnswerData[]}
+           config={pdfSettings}
+            />
+        </div>
+      </div>
+    </div>
+    <Footer/>
+    </>
+  );
+} 
+
+

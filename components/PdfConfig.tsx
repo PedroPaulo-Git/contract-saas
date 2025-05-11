@@ -19,22 +19,6 @@ export default function PdfConfig({ onConfigChange }: Props) {
   const [h2Size, setH2Size] = useState<number>(14);
   const [receiveSize, setReceiveSize] = useState<number>(12);
 
-  // Carregar valores do localStorage ao iniciar
-  // useEffect(() => {
-  //   const saved = localStorage.getItem('pdf-settings');
-  //   if (saved) {
-  //     try {
-  //       const parsed: PdfSettings = JSON.parse(saved);
-  //       setH1Size(parseInt(parsed.h1Size));
-  //       setH2Size(parseInt(parsed.h2Size));
-  //       setReceiveSize(parseInt(parsed.receiveSize));
-  //     } catch (error) {
-  //       console.error('Erro ao carregar configurações do PDF:', error);
-  //     }
-  //   }
-  // }, []);
-
-  // Atualizar localStorage e parent sempre que os valores mudarem
   useEffect(() => {
     const settings: PdfSettings = {
       h1Size: `${h1Size}pt`,
