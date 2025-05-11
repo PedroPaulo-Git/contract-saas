@@ -1,4 +1,4 @@
-import React, {useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import { generatePdf } from "../lib/pdf";
 // import html2pdf from "html2pdf.js";
 import { PdfSettings } from "./PdfConfig";
@@ -31,7 +31,13 @@ export interface ContractData {
 }
 export type FindAnswerFn = (question: string) => string;
 
-export default function PdfPreview({ id, service, layout, answers,config  }: Props) {
+export default function PdfPreview({
+  id,
+  service,
+  layout,
+  answers,
+  config,
+}: Props) {
   // const [url, setUrl] = useState("");
   // const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const pdfRef = useRef<HTMLDivElement>(null);
@@ -84,6 +90,9 @@ export default function PdfPreview({ id, service, layout, answers,config  }: Pro
         return generateEssayContent(baseData, findAnswer);
     }
   }
+  useEffect(() => {
+    console.log("Atualizando preview com configurações:", config);
+  }, [config]);
 
   const getContractContent = (isPDF = false) => {
     const title =
@@ -91,6 +100,8 @@ export default function PdfPreview({ id, service, layout, answers,config  }: Pro
         ? findAnswer("Title") || `${service} Contract`
         : `${service} Contract`;
     const subTitle = findAnswer("SubTitle", false);
+    // console.log('h1Size:', config.h1Size);
+    // console.log('receiveSize:', config.receiveSize);
 
     return `
     <html>
@@ -106,9 +117,7 @@ export default function PdfPreview({ id, service, layout, answers,config  }: Pro
           }
                .pdf {color:black; padding:  ${isPDF ? "0.5cm" : "1.5cm"} }
           
-             .receive{
-                font-size: ${isPDF ? config.receiveSize : "0.6rem"}
-                }
+       
           h1 {
             text-align: center;
             font-size: ${isPDF ? config.h1Size : "1.5rem"};
@@ -121,7 +130,7 @@ export default function PdfPreview({ id, service, layout, answers,config  }: Pro
             color: black;
           }
           .section-title {
-            font-size: ${isPDF ? "14pt" : "1.1rem"};
+            
             font-weight: bold;
             margin-top: 20px;
             margin-bottom: 10px;
@@ -129,7 +138,7 @@ export default function PdfPreview({ id, service, layout, answers,config  }: Pro
             padding-bottom: 3px;
           }
           p, li {
-            font-size: ${isPDF ? "11pt" : "0.9rem"};
+            font-size: ${isPDF ? config.receiveSize : "0.9rem"};
             text-align: justify;
             margin-bottom: 8px;
           }
@@ -147,8 +156,8 @@ export default function PdfPreview({ id, service, layout, answers,config  }: Pro
                 .pdf { padding:  ${isPDF ? "0.5cm" : "1cm"} }
                  .pdf {  overflow-y: auto; }
                 
-                h1 { font-size: ${isPDF ? "22pt" : "1rem"} }
-                h2 { font-size: ${isPDF ? "14pt" : "0.6rem"} }
+                h1 { font-size: ${isPDF ? config.h1Size : "1rem"} }
+                h2 { font-size: ${isPDF ? config.h2Size : "0.6rem"} }
                 .receive{
                 font-size: ${isPDF ? config.receiveSize : "0.6rem"}
                 }
@@ -177,7 +186,7 @@ export default function PdfPreview({ id, service, layout, answers,config  }: Pro
 
   const handleDownload = async () => {
     if (!pdfRef.current) return;
-
+    console.log(config);
     setIsGenerating(true);
     try {
       // Create a temporary div for PDF generation

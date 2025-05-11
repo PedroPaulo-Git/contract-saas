@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { AnswerData } from "../types";
 import TextInputBox from "./TextInputBox";
+import PdfConfig, { PdfSettings } from "./PdfConfig";
 
 interface Props {
   onAnswer: (data: AnswerData) => void;
   layout: string;
+  pdfSettings: PdfSettings;
+  onPdfSettingsChange: (settings: PdfSettings) => void;
 }
+//   const [pdfSettings, setPdfSettings] = useState<PdfSettings>({
+//   h1Size: '22pt',
+//   h2Size: '14pt',
+//   receiveSize: '12pt',
+// });
 
 interface Question {
   text: string;
@@ -229,7 +237,7 @@ const questionSets: Record<string, Question[]> = {
 };
 
 // Auto-fill values for dates and common selections
-export default function Questionnaire({ onAnswer, layout }: Props) {
+export default function Questionnaire({ onAnswer, layout,onPdfSettingsChange, pdfSettings }: Props) {
   const autoFillValues = {
     date: new Date().toISOString().split("T")[0],
     defaultSelections: {
@@ -264,7 +272,7 @@ export default function Questionnaire({ onAnswer, layout }: Props) {
   }
 
   return (
-    <div className="questionnaire-container ">
+    <div className="questionnaire-container relative ">
       {step < questions.length ? (
         <>
           <div className="flex justify-between">
@@ -315,6 +323,8 @@ export default function Questionnaire({ onAnswer, layout }: Props) {
             >
               {step < questions.length ? "Next" : "Finish"}
             </button>
+             <PdfConfig onConfigChange={onPdfSettingsChange} />
+
           </div>
         </>
       ) : (

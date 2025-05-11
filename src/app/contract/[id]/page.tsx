@@ -55,8 +55,14 @@ export default function ContractPage() {
       <div className="grid md:grid-cols-2 gap-6">
         {/* Perguntas */}
         <div className="bg-[#1b263b] p-4 rounded shadow-md border border-[#415a77]">
-          <Questionnaire onAnswer={handleAnswer} layout={layout} />
-          <PdfConfig onConfigChange={setPdfSettings} />
+          <Questionnaire
+  onAnswer={handleAnswer}
+  layout={layout}
+  pdfSettings={pdfSettings}
+  onPdfSettingsChange={setPdfSettings}
+/>
+
+          {/* <PdfConfig onConfigChange={setPdfSettings} /> */}
         </div>
 
         {/* Preview */}
