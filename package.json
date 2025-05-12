@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@types/puppeteer": "^5.4.7",
-    "emitter": "^0.0.5",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.3",
     "jspdf": "^3.0.1",

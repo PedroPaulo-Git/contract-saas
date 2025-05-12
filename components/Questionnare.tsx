@@ -315,11 +315,11 @@ export default function Questionnaire({ onAnswer, layout,onPdfSettingsChange }: 
             </select>
           )}
 
-          <div className="question-footer">
+          <div className="question-footer relative flex justify-between items-center mt-2">
             <button
               onClick={next}
               disabled={!value && currentQuestion.required}
-              className="next-button px-3 py-1 mt-2 bg-[#415a77]"
+              className="next-button px-3 py-1 bg-[#415a77]"
             >
               {step < questions.length ? "Next" : "Finish"}
             </button>
