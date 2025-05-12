@@ -1,4 +1,4 @@
-import {FindAnswerFn } from "../generateLayoutContent";
+// import {FindAnswerFn } from "../generateLayoutContent";
 import { ContractData } from "../../../types";
 
 export function NDALayout(data: ContractData): string {
