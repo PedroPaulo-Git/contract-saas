@@ -5,14 +5,11 @@ import { PdfSettings } from "./PdfConfig";
 import { AnswerData } from "../types";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
-import {
-  generateNDAContent,
-  generateIPContent,
-  generateBusinessContent,
-  generateServiceContent,
-  generateLegalContent,
-  generateEssayContent,
-} from "./Contract/generateLayoutContent";
+import { EssayLayout } from "./Contract/Layouts/Essay";
+import { IPLayout } from "./Contract/Layouts/IP";
+import { ServiceLayout } from "./Contract/Layouts/Service";
+import { NDALayout } from "./Contract/Layouts/NDA";
+import layoutStyles from "@/app/styles/layoutStyles";
 
 interface Props {
   id: string;
@@ -77,17 +74,17 @@ export default function PdfPreview({
 
     switch (layout) {
       case "NDA":
-        return generateNDAContent(baseData, findAnswer);
+        return NDALayout(baseData, findAnswer);
       case "IP":
-        return generateIPContent(baseData, findAnswer);
-      case "Business":
-        return generateBusinessContent(baseData, findAnswer);
+        return IPLayout(baseData, findAnswer);
+      // case "Business":
+      //   return generateBusinessContent(baseData, findAnswer);
       case "Service":
-        return generateServiceContent(baseData, findAnswer, service);
-      case "Legal":
-        return generateLegalContent(baseData, findAnswer);
+        return ServiceLayout(baseData, findAnswer, service);
+      // case "Legal":
+      //   return generateLegalContent(baseData, findAnswer);
       default:
-        return generateEssayContent(baseData, findAnswer);
+        return EssayLayout(baseData, findAnswer);
     }
   }
   useEffect(() => {
@@ -102,90 +99,94 @@ export default function PdfPreview({
     const subTitle = findAnswer("SubTitle", false);
     // console.log('h1Size:', config.h1Size);
     // console.log('receiveSize:', config.receiveSize);
+    const layoutStyle = layoutStyles[layout] || "";
+  console.log("layout atual:", layout);
+console.log("layoutStyles disponíveis:", Object.keys(layoutStyles));
+console.log("layoutStyle resultante:", layoutStyles[layout]);
 
     return `
     <html>
       <head>
         <style>
-        
-          body {
-            line-height: 1.6;
-            color: black;
-            margin: 0;
+        ${layoutStyle}
+          // body {
+          //   line-height: 1.6;
+          //   color: black;
+          //   margin: 0;
          
-            font-family: ${isPDF ? "'Times New Roman', serif" : "sans-serif"};
-          }
-               .pdf {color:black; padding:  ${isPDF ? "0.5cm" : "1.5cm"} }
-               .paragrafy {
-                margin-top: 0;
-                margin-bottom: 0; /* ou 1em, se quiser mais espaço */
-                line-height: 1.6;
-            }
+          //   font-family: ${isPDF ? "'Times New Roman', serif" : "sans-serif"};
+          // }
+          //      .pdf {color:black; padding:  ${isPDF ? "0.5cm" : "1.5cm"} }
+          //      .paragrafy {
+          //       margin-top: 0;
+          //       margin-bottom: 0; /* ou 1em, se quiser mais espaço */
+          //       line-height: 1.6;
+          //   }
        
-          h1 {
-            text-align: center;
-            font-size: ${isPDF ? config.h1Size : "1.5rem"};
-            margin-bottom: 10px;
-          }
-          h2 {
-            text-align: center;
-            font-size: ${isPDF ? config.h2Size : "1rem"};
-            margin-bottom: 30px;
-            color: black;
-          }
-          .section-title {
+          // h1 {
+          //   text-align: center;
+          //   font-size: ${isPDF ? config.h1Size : "1.5rem"};
+          //   margin-bottom: 10px;
+          // }
+          // h2 {
+          //   text-align: center;
+          //   font-size: ${isPDF ? config.h2Size : "1rem"};
+          //   margin-bottom: 30px;
+          //   color: black;
+          // }
+          // .section-title {
             
-            font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 3px;
-          }
-          p, li {
-            font-size: ${isPDF ? config.receiveSize : "0.9rem"};
-            text-align: justify;
-            margin-bottom: 8px;
-            text-indent: 2em;
-          }
-          .footer {
-            margin-top: 50px;
-            font-size: ${isPDF ? "10pt" : "0.8rem"};
-            text-align: center;
-          }
+          //   font-weight: bold;
+          //   margin-top: 20px;
+          //   margin-bottom: 10px;
+          //   border-bottom: 1px solid #ddd;
+          //   padding-bottom: 3px;
+          // }
+          // p, li {
+          //   font-size: ${isPDF ? config.receiveSize : "0.9rem"};
+          //   text-align: justify;
+          //   margin-bottom: 8px;
+          //   text-indent: 2em;
+          // }
+          // .footer {
+          //   margin-top: 50px;
+          //   font-size: ${isPDF ? "10pt" : "0.8rem"};
+          //   text-align: center;
+          // }
 
 
 
 
-            @media (max-width: 640px) {
-                 body { padding: 0cm; }
-                .pdf { padding:  ${isPDF ? "0.5cm" : "1cm"} }
-                 .pdf {  overflow-y: auto; }
-                .paragrafy {
-  margin-top: 0;
-  margin-bottom: 0; /* ou 1em, se quiser mais espaço */
-  line-height: 1.6;
-}
-                h1 { font-size: ${isPDF ? config.h1Size : "1rem"} }
-                h2 { font-size: ${isPDF ? config.h2Size : "0.6rem"} }
-                .receive{
-                font-size: ${isPDF ? config.receiveSize : "0.6rem"}
-                }
+//             @media (max-width: 640px) {
+//                  body { padding: 0cm; }
+//                 .pdf { padding:  ${isPDF ? "0.5cm" : "1cm"} }
+//                  .pdf {  overflow-y: auto; }
+//                 .paragrafy {
+//   margin-top: 0;
+//   margin-bottom: 0; /* ou 1em, se quiser mais espaço */
+//   line-height: 1.6;
+// }
+//                 h1 { font-size: ${isPDF ? config.h1Size : "1rem"} }
+//                 h2 { font-size: ${isPDF ? config.h2Size : "0.6rem"} }
+//                 .receive{
+//                 font-size: ${isPDF ? config.receiveSize : "0.6rem"}
+//                 }
                
-                .section-title {  font-size: ${isPDF ? "14pt" : "0.8rem"}}
-              }
+//                 .section-title {  font-size: ${isPDF ? "14pt" : "0.8rem"}}
+//               }
         </style>
       </head>
       <body>
-        <div class="pdf">
+        <div class="pdf layout-style">
           <div class="header">
-            <h1>${title}</h1>
-            <h2>${subTitle}</h2>
+            <h1 class="layout-style">${title}</h1>
+            <h2 class="layout-style">${subTitle}</h2>
           </div>
-          <div class="receive">
+          <div class="receive layout-style">
             ${getLayoutContent(layout, findAnswer, service)}
           </div>
-          <div class="footer">
-            <p class="paragrafy">Document ID: ${id} | Generated on ${new Date().toLocaleDateString()}</p>
+          <div class="footer layout-style">
+            <p class="paragrafy layout-style">Document ID: ${id} | Generated on ${new Date().toLocaleDateString()}</p>
           </div>
         </div>
       </body>
