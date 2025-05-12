@@ -1,13 +1,6 @@
 
 // types.ts
-export interface ContractData {
-    today: string;
-    clientName: string;
-    freelancerName: string;
-    companyName: string;
-    projectType: string;
-    projectDescription: string;
-  }
+// import { ContractData } from "../../types";
   
 export type FindAnswerFn = (question: string) => string;
 
@@ -18,26 +11,26 @@ export function generateClosingSections(findAnswer: FindAnswerFn, layout: string
 
   return `
     <div class="section-title">${paymentIndex}. PAYMENT TERMS</div>
-    <p class="paragrafy"><strong>Payment Method:</strong> ${findAnswer("payment method")}</p>
-    <p class="paragrafy">Payment shall be made as follows: 50% upfront, 50% upon completion.</p>
+    <p class="paragraph"><strong>Payment Method:</strong> ${findAnswer("payment method")}</p>
+    <p class="paragraph">Payment shall be made as follows: 50% upfront, 50% upon completion.</p>
 
     <div class="section-title">${signatureIndex}. SIGNATURES</div>
     <div class="signature-block">
       <div class="signature-line">
-        <p class="paragrafy">__________________________</p>
-        <p class="paragrafy">Service Provider Signature</p>
-        <p class="paragrafy">Date: __________________</p>
+        <p class="paragraph">__________________________</p>
+        <p class="paragraph">Service Provider Signature</p>
+        <p class="paragraph">Date: __________________</p>
       </div>
       <div class="signature-line">
-        <p class="paragrafy">__________________________</p>
-        <p class="paragrafy">Client Signature</p>
-        <p class="paragrafy">Date: __________________</p>
+        <p class="paragraph">__________________________</p>
+        <p class="paragraph">Client Signature</p>
+        <p class="paragraph">Date: __________________</p>
       </div>
     </div>
 
     <div class="section-title">${generalIndex}. GENERAL PROVISIONS</div>
-    <p class="paragrafy">This agreement constitutes the entire understanding between the parties.</p>
-    <p class="paragrafy">Any amendments must be made in writing and signed by both parties.</p>
+    <p class="paragraph">This agreement constitutes the entire understanding between the parties.</p>
+    <p class="paragraph">Any amendments must be made in writing and signed by both parties.</p>
   `;
 }
 
@@ -53,14 +46,14 @@ export function generateClosingSections(findAnswer: FindAnswerFn, layout: string
 // export function generateNDAContent(data: ContractData, findAnswer: FindAnswerFn): string {
 //   return `
 //     <div class="section-title">1. PARTIES</div>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       This Non-Disclosure Agreement ("Agreement") is entered into as of ${data.today} between:
 //     </p>
-//     <p class="paragrafy"><strong>Disclosing Party:</strong> ${data.clientName}</p>
-//     <p class="paragrafy"><strong>Receiving Party:</strong> ${data.freelancerName}</p>
+//     <p class="paragraph"><strong>Disclosing Party:</strong> ${data.clientName}</p>
+//     <p class="paragraph"><strong>Receiving Party:</strong> ${data.freelancerName}</p>
 
 //     <div class="section-title">2. CONFIDENTIAL INFORMATION</div>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       The parties agree to protect confidential information, including but not limited to trade secrets, business strategies, and proprietary data.
 //     </p>
 //   ` + generateClosingSections(findAnswer, "NDA");
@@ -71,7 +64,7 @@ export function generateClosingSections(findAnswer: FindAnswerFn, layout: string
 // export function generateIPContent(data: ContractData, findAnswer: FindAnswerFn): string {
 //   return `
 //     <div class="section-title">1. OWNERSHIP</div>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       The intellectual property developed during the project remains with the creator unless otherwise agreed.
 //     </p>
 //   ` + generateClosingSections(findAnswer, "IP");
@@ -80,7 +73,7 @@ export function generateClosingSections(findAnswer: FindAnswerFn, layout: string
 // export function generateBusinessContent(data: ContractData, findAnswer: FindAnswerFn): string {
 //   return `
 //     <div class="section-title">1. SCOPE OF WORK</div>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       ${data.projectDescription}
 //     </p>
 //   ` + generateClosingSections(findAnswer, "Business");
@@ -92,32 +85,32 @@ export function generateClosingSections(findAnswer: FindAnswerFn, layout: string
 // ): string {
 //   return `
 //     <div class="section-title">1. PARTIES INVOLVED</div>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       This Service Agreement is made between the following parties:
 //     </p>
-//     <p class="paragrafy"><strong>Client:</strong> ${findAnswer("Full legal name of client") || '[Client Name]'}</p>
-//     <p class="paragrafy"><strong>Freelancer:</strong> ${findAnswer("Full legal name of freelancer") || '[Freelancer Name]'}</p>
+//     <p class="paragraph"><strong>Client:</strong> ${findAnswer("Full legal name of client") || '[Client Name]'}</p>
+//     <p class="paragraph"><strong>Freelancer:</strong> ${findAnswer("Full legal name of freelancer") || '[Freelancer Name]'}</p>
 
 //     <div class="section-title">2. PROJECT OVERVIEW</div>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       The freelancer agrees to perform the following service: <strong>${service}</strong>, which falls under the category of <strong>${findAnswer("Project type") || '[Project Type]'}</strong>.
 //     </p>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       Project description: ${findAnswer("Brief project description") || '[Description Not Provided]'}
 //     </p>
 
 //     <div class="section-title">3. TIMELINE</div>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       The project will commence on <strong>${findAnswer("Start date") || '[Start Date]'}</strong> and is expected to end on <strong>${findAnswer("End date") || '[End Date]'}</strong>. 
 //       The estimated completion date is <strong>${findAnswer("Expected completion date") || '[Expected Date]'}</strong>.
 //     </p>
 
 //     <div class="section-title">4. COMMUNICATION & REVISIONS</div>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       Communication between the parties will be conducted primarily via <strong>${findAnswer("Communication method") || '[Method Not Specified]'}</strong>. 
 //       Response time is expected to be within <strong>${findAnswer("Response time (e.g., within 24 hours)") || '[Response Time]'}</strong>.
 //     </p>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       The freelancer offers the following revision policy: <strong>${findAnswer("Revision policy (e.g., 2 rounds included)") || '[Policy Not Specified]'}</strong>.
 //     </p>
 //   ` + generateClosingSections(findAnswer, "Service");
@@ -127,7 +120,7 @@ export function generateClosingSections(findAnswer: FindAnswerFn, layout: string
 // export function generateLegalContent(data: ContractData, findAnswer: FindAnswerFn): string {
 //   return `
 //     <div class="section-title">1. LEGAL TERMS</div>
-//     <p class="paragrafy">
+//     <p class="paragraph">
 //       Both parties agree to comply with local, state, and federal regulations.
 //     </p>
 //   ` + generateClosingSections(findAnswer, "Legal");
@@ -138,7 +131,7 @@ export function generateClosingSections(findAnswer: FindAnswerFn, layout: string
 
 //   const formattedParagraphs = essayText
 //     .split(/\n\s*\n/)
-//     .map(paragraph => `<p class="paragrafy">${paragraph.trim()}</p>`)
+//     .map(paragraph => `<p class="paragraph">${paragraph.trim()}</p>`)
 //     .join("\n");
 
 //   return `

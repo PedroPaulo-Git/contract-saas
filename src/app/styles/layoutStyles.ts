@@ -7,12 +7,12 @@ const getGlobalStyles = (isPDF: boolean, config: PdfSettings): string => {
       padding: ${isPDF ? "0.5cm" : "1.5cm"};
     }
  
-    .paragrafy {
-      margin-top: 0;
-      margin-bottom: 0;
-      line-height: 1.6;
-      text-indent: 2em;
-    }
+    // .paragraph {
+    //   margin-top: 0;
+    //   margin-bottom: 0;
+    //   line-height: 1.6;
+    //   text-indent: 2em;
+    // }
 
     h1 { font-size: ${isPDF ? config.h1Size : "1rem"}; text-align: center; ${config.underlineH1 ? "text-decoration: underline;" : ""}}
     h2 { font-size: ${isPDF ? config.h2Size : "0.6rem"}; text-align: center; margin-bottom: 30px;}
@@ -40,16 +40,37 @@ const layoutStyles = (layout: string, isPDF: boolean, config: PdfSettings): stri
         .layout-style h1 {
           color: red;
         }
+            .paragraph {
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 1.6;
+      text-indent: 2em;
+    }
+
       `;
       break;
     case "NDA":
       specificStyle = `
         .layout-style {
-          font-family: Arial, sans-serif;
+          font-family: Times New Roman, sans-serif;
         }
+          .paragraph{
+         margin:0px;
+          }
+         .sub_paragraph{
+         margin-top:10px;
+         }
+          .paragraph_title{
+          margin:0px;
+          margin-top:10px;
+          font-style: italic;
+          text-decoration: underline;
+          font-weight: bold;
+          }
         .layout-style h1 {
           color: ${isPDF ? "black" : "darkred"};
         }
+        
       `;
       break;
     case "IP":

@@ -11,7 +11,7 @@ import { IPLayout } from "./Contract/Layouts/IP";
 import { ServiceLayout } from "./Contract/Layouts/Service";
 import { NDALayout } from "./Contract/Layouts/NDA";
 import layoutStyles from "@/app/styles/layoutStyles";
-
+import { ContractData } from "../types";
 interface Props {
   id: string;
   service: string;
@@ -19,14 +19,7 @@ interface Props {
   answers: AnswerData[] | string[];
   config: PdfSettings;
 }
-export interface ContractData {
-  today: string;
-  clientName: string;
-  freelancerName: string;
-  companyName: string;
-  projectType: string;
-  projectDescription: string;
-}
+
 export type FindAnswerFn = (question: string) => string;
 
 export default function PdfPreview({
@@ -65,12 +58,12 @@ export default function PdfPreview({
     const baseData: ContractData = {
       today: new Date().toLocaleDateString(),
       clientName: findAnswer("Full legal name of client") || "__________",
-      freelancerName:
-        findAnswer("Full legal name of freelancer") || "__________",
+      freelancerName: findAnswer("Full legal name of freelancer") || "__________",
       companyName: findAnswer("company legal name") || "__________",
       projectType: findAnswer("Project type") || "__________",
-      projectDescription:
-        findAnswer("Brief project description") || "__________",
+      projectDescription: findAnswer("Brief project description") || "__________",
+      clientAddress: findAnswer("Brief project description") || "__________",
+      freelancerAddress: findAnswer("Brief project description") || "__________",
     };
 
     switch (layout) {
@@ -111,6 +104,7 @@ export default function PdfPreview({
       <head>
         <style>
         ${layoutStyle}
+        
         </style>
       </head>
       <body>
@@ -123,7 +117,7 @@ export default function PdfPreview({
             ${getLayoutContent(layout, findAnswer, service)}
           </div>
           <div class="footer layout-style">
-            <p class="paragrafy layout-style">Document ID: ${id} | Generated on ${new Date().toLocaleDateString()}</p>
+            <p class="paragraph layout-style">Document ID: ${id} | Generated on ${new Date().toLocaleDateString()}</p>
           </div>
         </div>
       </body>
@@ -136,7 +130,7 @@ export default function PdfPreview({
     if (!pdfRef.current) return;
 
     const opt = {
-      margin: [15, 15, 15, 15], // top, left, bottom, right
+      margin: [10, 10, 10, 10], // top, left, bottom, right
       filename: `Contract_${service}_${id}.pdf`,
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
@@ -164,77 +158,7 @@ export default function PdfPreview({
       });
   };
 
-  // const handleDownload = async () => {
-  //   if (!pdfRef.current) return;
-  //   console.log(config);
-  //   setIsGenerating(true);
-  //   try {
-  //     // Create a temporary div for PDF generation
-  //     const tempDiv = document.createElement("div");
-  //     tempDiv.style.position = "absolute";
-  //     tempDiv.style.left = "-9999px";
-  //     tempDiv.style.width = "210mm";
-  //     tempDiv.style.padding = "20mm";
-  //     tempDiv.style.fontFamily = "'Times New Roman', serif";
-  //     tempDiv.innerHTML = getContractContent(true);
-  //     document.body.appendChild(tempDiv);
 
-  //     const canvas = await (html2canvas as any)(tempDiv, {
-  //       scale: 2,
-  //       logging: false,
-  //       useCORS: true,
-  //     });
-
-  //     document.body.removeChild(tempDiv);
-
-  //     const pdf = new jsPDF({
-  //       orientation: "portrait",
-  //       unit: "mm",
-  //       format: "a4",
-  //     });
-
-  //     const imgData = canvas.toDataURL("image/png");
-  //     const pdfWidth = pdf.internal.pageSize.getWidth();
-  //     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-  //     const imgProps = {
-  //       width: pdfWidth,
-  //       height: pdfHeight,
-  //     };
-  //     let position = 0;
-  //     if (imgProps.height <= pdfHeight) {
-  //       pdf.addImage(
-  //         imgData,
-  //         "PNG",
-  //         0,
-  //         position,
-  //         imgProps.width,
-  //         imgProps.height
-  //       );
-  //     } else {
-  //       let heightLeft = imgProps.height;
-  //       while (heightLeft > 0) {
-  //         pdf.addImage(
-  //           imgData,
-  //           "PNG",
-  //           0,
-  //           position,
-  //           imgProps.width,
-  //           imgProps.height
-  //         );
-  //         heightLeft -= pdfHeight;
-  //         if (heightLeft > 0) {
-  //           pdf.addPage();
-  //           position = -heightLeft;
-  //         }
-  //       }
-  //     }
-  //     pdf.save(`Contract_${service}_${id}.pdf`);
-  //   } catch (error) {
-  //     console.error("Error generating PDF:", error);
-  //   } finally {
-  //     setIsGenerating(false);
-  //   }
-  // };
 
   return (
     <div className="w-full flex flex-col items-center gap-4">

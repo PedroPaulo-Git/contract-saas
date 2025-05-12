@@ -24,6 +24,7 @@ export default function ContractPage() {
   h1Size: "22pt",
   h2Size: "14pt",
   receiveSize: "12pt",
+  underlineH1:false
 });
 
   const handlePdfSettingsChange = (settings: PdfSettings) => {
@@ -54,6 +55,7 @@ export default function ContractPage() {
             h1Size: "22pt",
             h2Size: "14pt",
             receiveSize: "12pt",
+            underlineH1:false
           }}
         />
       </div>
