@@ -2,17 +2,21 @@ import { PdfSettings } from "../../../components/PdfConfig";
 
 const getGlobalStyles = (isPDF: boolean, config: PdfSettings): string => {
   return `
+
     .pdf {
       color: black;
       padding: ${isPDF ? "0.5cm" : "1.5cm"};
     }
  
-    // .paragraph {
-    //   margin-top: 0;
-    //   margin-bottom: 0;
-    //   line-height: 1.6;
-    //   text-indent: 2em;
-    // }
+  p, h1, h2, h3, .paragraph {
+  page-break-inside: avoid;
+}
+p, h1, h2, h3 {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
 
     h1 { font-size: ${isPDF ? config.h1Size : "1rem"}; text-align: center; ${config.underlineH1 ? "text-decoration: underline;" : ""}}
     h2 { font-size: ${isPDF ? config.h2Size : "0.6rem"}; text-align: center; margin-bottom: 30px;}

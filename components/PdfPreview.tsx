@@ -29,6 +29,7 @@ export default function PdfPreview({
   answers,
   config,
 }: Props) {
+  
   // const [url, setUrl] = useState("");
   // const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const pdfRef = useRef<HTMLDivElement>(null);
@@ -68,7 +69,7 @@ export default function PdfPreview({
 
     switch (layout) {
       case "NDA":
-        return NDALayout(baseData, findAnswer);
+        return NDALayout(baseData);
       case "IP":
         return IPLayout(baseData, findAnswer);
       // case "Business":
@@ -128,14 +129,14 @@ export default function PdfPreview({
 
   const handleDownload = () => {
     if (!pdfRef.current) return;
-
+    setIsGenerating(true);
     const opt = {
       margin: [10, 10, 10, 10], // top, left, bottom, right
       filename: `Contract_${service}_${id}.pdf`,
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"]},
     };
 
     const tempDiv = document.createElement("div");
@@ -155,6 +156,7 @@ export default function PdfPreview({
       .save()
       .finally(() => {
         document.body.removeChild(tempDiv);
+        setIsGenerating(false)
       });
   };
 
