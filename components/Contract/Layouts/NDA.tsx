@@ -1,19 +1,19 @@
-// import {FindAnswerFn } from "../generateLayoutContent";
+import {FindAnswerFn } from "../generateLayoutContent";
 import { ContractData } from "../../../types";
 
-export function NDALayout(data: ContractData): string {
+export function NDALayout(data: ContractData,findAnswer: FindAnswerFn): string {
   return `
     <p class="paragraph">
-      This Non-Disclosure Agreement ("Agreement") is entered into as of ${data.today} between:
+      This Non-Disclosure Agreement ("Agreement") is entered into as of ${findAnswer("Agreement Date")} between:
     </p>
-<p class="paragraph">Disclosing Party: ${data.clientName}, located at ${data.clientAddress}</p>
-<p class="paragraph">Receiving Party: ${data.freelancerName}, located at ${data.freelancerAddress}</p>
-<p class="paragraph_br">Throughout the duration of this
-Agreement, the Disclosing Party may deem it necessary to disclose or share
-certain proprietary information with the Recipient. Therefore, in consideration
-of the mutual promises and covenants contained within this Agreement, and other
-good and valuable consideration, the receipt and sufficiency of which is hereby
-acknowledged, both parties hereto agree as follows:</p>
+    <p class="paragraph">Disclosing Party: ${findAnswer("Disclosing Party Name")}, located at ${findAnswer("Disclosing Party Address")}</p>
+    <p class="paragraph">Receiving Party: ${findAnswer("Receiving Party Name")}, located at ${findAnswer("Receiving Party Address")}</p>
+    <p class="paragraph_br">Throughout the duration of this
+    Agreement, the Disclosing Party may deem it necessary to disclose or share
+    certain proprietary information with the Recipient. Therefore, in consideration
+    of the mutual promises and covenants contained within this Agreement, and other
+    good and valuable consideration, the receipt and sufficiency of which is hereby
+    acknowledged, both parties hereto agree as follows:</p>
 
 <p class="paragraph_title">Confidential Information</p>
 

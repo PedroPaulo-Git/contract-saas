@@ -157,6 +157,33 @@ const questionSets: Record<string, Question[]> = {
     },
   ],
 
+NDA:[
+  {
+    text: "Agreement Date",
+    type: "date",
+    required: true,
+  },
+  {
+    text: "Disclosing Party Name",
+    type: "text",
+    required: true,
+  },
+  {
+    text: "Disclosing Party Address",
+    type: "text",
+    required: true,
+  },
+  {
+    text: "Receiving Party Name",
+    type: "text",
+    required: true,
+  },
+  {
+    text: "Receiving Party Address",
+    type: "textarea",
+    required: true,
+  },
+],
 
 
 
@@ -249,8 +276,9 @@ export default function Questionnaire({ onAnswer, layout,onPdfSettingsChange }: 
 
   const questions = questionSets[layout] || [];
   const [step, setStep] = useState(0);
-  const [value, setValue] = useState("");
 
+
+  
   const currentQuestion = questions[step];
   const defaultValue =
     currentQuestion?.type === "date"
@@ -258,6 +286,12 @@ export default function Questionnaire({ onAnswer, layout,onPdfSettingsChange }: 
       : (autoFillValues.defaultSelections as Record<string, string>)[
           currentQuestion?.text
         ] || "";
+        
+  const [value, setValue] = useState(
+  currentQuestion?.type === "date" ? autoFillValues.date : ""
+);
+
+
 
   function next() {
     const answerValue = value || defaultValue;

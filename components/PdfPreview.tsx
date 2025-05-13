@@ -69,7 +69,7 @@ export default function PdfPreview({
 
     switch (layout) {
       case "NDA":
-        return NDALayout(baseData);
+        return NDALayout(baseData, findAnswer);
       case "IP":
         return IPLayout(baseData, findAnswer);
       // case "Business":
@@ -98,7 +98,7 @@ export default function PdfPreview({
 
     console.log("layout atual:", layout);
     console.log("layoutStyles disponíveis:", Object.keys(layoutStyles));
-    console.log("layoutStyle resultante:", layoutStyles(layout, isPDF, config));
+    // console.log("layoutStyle resultante:", layoutStyles(layout, isPDF, config));
 
     return `
     <html>
