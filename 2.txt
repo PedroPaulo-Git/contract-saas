@@ -1,0 +1,74 @@
+    <style>
+//          @media (max-width: 640px) {
+//                  body { padding: 0cm; }
+//                 .pdf { padding:  ${isPDF ? "0.5cm" : "1cm"} }
+//                  .pdf {  overflow-y: auto; }
+//                 .paragrafy {
+//   margin-top: 0;
+//   margin-bottom: 0; /* ou 1em, se quiser mais espaço */
+//   line-height: 1.6;
+// }
+//                 h1 { font-size: ${isPDF ? config.h1Size : "1rem"} }
+//                 h2 { font-size: ${isPDF ? config.h2Size : "0.6rem"} }
+//                 .receive{
+//                 font-size: ${isPDF ? config.receiveSize : "0.6rem"}
+//                 }
+              
+//         .pdf {
+//         color:black; 
+//         padding:  ${isPDF ? "0.5cm" : "1.5cm"} 
+//         }
+        ${layoutStyle}
+          // body {
+          //   line-height: 1.6;
+          //   color: black;
+          //   margin: 0;
+         
+          //   font-family: ${isPDF ? "'Times New Roman', serif" : "sans-serif"};
+          // }
+          //      .pdf {color:black; padding:  ${isPDF ? "0.5cm" : "1.5cm"} }
+          //      .paragrafy {
+          //       margin-top: 0;
+          //       margin-bottom: 0; /* ou 1em, se quiser mais espaço */
+          //       line-height: 1.6;
+          //   }
+       
+          // h1 {
+          //   text-align: center;
+          //   font-size: ${isPDF ? config.h1Size : "1.5rem"};
+          //   margin-bottom: 10px;
+          // }
+          // h2 {
+          //   text-align: center;
+          //   font-size: ${isPDF ? config.h2Size : "1rem"};
+          //   margin-bottom: 30px;
+          //   color: black;
+          // }
+          // .section-title {
+            
+          //   font-weight: bold;
+          //   margin-top: 20px;
+          //   margin-bottom: 10px;
+          //   border-bottom: 1px solid #ddd;
+          //   padding-bottom: 3px;
+          // }
+          // p, li {
+          //   font-size: ${isPDF ? config.receiveSize : "0.9rem"};
+          //   text-align: justify;
+          //   margin-bottom: 8px;
+          //   text-indent: 2em;
+          // }
+          // .footer {
+          //   margin-top: 50px;
+          //   font-size: ${isPDF ? "10pt" : "0.8rem"};
+          //   text-align: center;
+          // }
+
+h1{
+         color:red;
+        }
+
+
+           
+
+        </style>
