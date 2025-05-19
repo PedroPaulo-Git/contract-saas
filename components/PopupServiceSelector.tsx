@@ -18,7 +18,7 @@ const services = [
     description: 'For freelance projects, covering scope, deadlines, and payment terms.'
   },
   { 
-    name: 'NDA (Non-Disclosure)', 
+    name: 'NDA (Non-Disclosure) Agreement', 
     service: 'NDA',
     description: 'Protect confidential information in business deals or partnerships.'
   },

@@ -26,8 +26,8 @@ const getGlobalStyles = (isPDF: boolean, config: PdfSettings): string => {
     page-break-before: always;
     break-before: always;
   }
-    h1 { font-size: ${isPDF ? config.h1Size : "1rem"}; text-align: center; ${config.underlineH1 ? "text-decoration: underline;" : ""}}
-    h2 { font-size: ${isPDF ? config.h2Size : "0.6rem"}; text-align: center; margin-bottom: 30px;}
+    h1.layout-style { font-size: ${isPDF ? config.h1Size : "1rem"}; text-align: center; ${config.underlineH1 ? "text-decoration: underline;" : ""}}
+    h2.layout-style { font-size: ${isPDF ? config.h2Size : "0.6rem"}; text-align: center; margin-bottom: 30px;}
     .receive {
       font-size: ${isPDF ? config.receiveSize : "0.6rem"};
     }
@@ -48,10 +48,14 @@ const layoutStyles = (layout: string, isPDF: boolean, config: PdfSettings): stri
       specificStyle = `
         .layout-style {
           font-family: Georgia, serif;
+        
         }
         .layout-style h1 {
           color: red;
         }
+          .footer{
+            color:#cccccc;
+          }
             .paragraph {
       margin-top: 0;
       margin-bottom: 0;

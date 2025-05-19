@@ -89,7 +89,7 @@ export default function PdfPreview({
   const getContractContent = (isPDF = false) => {
     const title =
       layout === "Default"
-        ? findAnswer("Title") || `${service} Contract`
+        ? findAnswer("Title") || `${service}`
         : `${service} Contract`;
     const subTitle = findAnswer("SubTitle", false);
     // console.log('h1Size:', config.h1Size);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnswerData } from "../types";
 import TextInputBox from "./TextInputBox";
 import PdfConfig, { PdfSettings } from "./PdfConfig";
@@ -156,8 +156,7 @@ const questionSets: Record<string, Question[]> = {
       required: true,
     },
   ],
-
-NDA:[
+ NDA:[
   {
     text: "Agreement Date",
     type: "date",
@@ -183,8 +182,63 @@ NDA:[
     type: "textarea",
     required: true,
   },
+  {
+    text: "Agreement Duration",
+    type: "select",
+    options: ["1 year", "2 years", "3 years", "5 years", "Indefinite"],
+    required: true,
+  },
+  {
+    text: "Governing Law State",
+    type: "select",
+    options: [
+      "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+      "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+      "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", 
+      "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
+      "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
+      "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
+      "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+    ],
+    required: true,
+  },
+  {
+    text: "Jurisdiction Location",
+    type: "text",
+    placeholder: "e.g., New York County, NY",
+    required: true,
+  },
+  {
+    text: "Disclosing Party Representative Name",
+    type: "text",
+    required: true,
+  },
+  {
+    text: "Disclosing Party Representative Title",
+    type: "text",
+    required: true,
+  },
+  {
+    text: "Disclosing Party Signature Date",
+    type: "date",
+    required: true,
+  },
+  {
+    text: "Receiving Party Representative Name",
+    type: "text",
+    required: true,
+  },
+  {
+    text: "Receiving Party Representative Title",
+    type: "text",
+    required: true,
+  },
+  {
+    text: "Receiving Party Signature Date",
+    type: "date",
+    required: true,
+  },
 ],
-
 
 
   Service: [
@@ -280,7 +334,7 @@ export default function Questionnaire({ onAnswer, layout,onPdfSettingsChange }: 
 
   
   const currentQuestion = questions[step];
-  const defaultValue =
+  let defaultValue =
     currentQuestion?.type === "date"
       ? autoFillValues.date
       : (autoFillValues.defaultSelections as Record<string, string>)[
@@ -291,18 +345,31 @@ export default function Questionnaire({ onAnswer, layout,onPdfSettingsChange }: 
   currentQuestion?.type === "date" ? autoFillValues.date : ""
 );
 
+useEffect(() => {
+  defaultValue =
+    currentQuestion?.type === "date"
+      ? autoFillValues.date
+      : (autoFillValues.defaultSelections as Record<string, string>)[
+          currentQuestion?.text
+        ] || "";
+
+  setValue(defaultValue);
+}, [currentQuestion]);
 
 
   function next() {
     const answerValue = value || defaultValue;
     // Now passing just the answer string instead of an object
+  //  console.log(answerValue)
     onAnswer({
       question: currentQuestion.text,
       answer: answerValue,
     });
     console.log("answer :",answerValue)
+    console.log(questions.length)
+    console.log(step)
     setValue("");
-    setStep((prev) => Math.min(prev + 1, questions.length - 1));
+    setStep((prev) => Math.min(prev + 1, questions.length));
   }
 
   return (
@@ -311,6 +378,8 @@ export default function Questionnaire({ onAnswer, layout,onPdfSettingsChange }: 
         <>
           <div className="flex justify-between">
             <h4 className="question-title">
+
+              {value}
               {currentQuestion.text}{" "}
               {!currentQuestion.required && <span className="required">(Optional)</span>}
              {currentQuestion.required && <span className="required">*</span>}

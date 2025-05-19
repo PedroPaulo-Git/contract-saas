@@ -1,20 +1,8 @@
-import {FindAnswerFn } from "../generateLayoutContent";
+import { FindAnswerFn } from "../generateLayoutContent";
 import { ContractData } from "../../../types";
-
-export function NDALayout(data: ContractData,findAnswer: FindAnswerFn): string {
+function ConfidentialInformationSection(findAnswer: FindAnswerFn): string {
   return `
-    <p class="paragraph">
-      This Non-Disclosure Agreement ("Agreement") is entered into as of ${findAnswer("Agreement Date")} between:
-    </p>
-    <p class="paragraph">Disclosing Party: ${findAnswer("Disclosing Party Name")}, located at ${findAnswer("Disclosing Party Address")}</p>
-    <p class="paragraph">Receiving Party: ${findAnswer("Receiving Party Name")}, located at ${findAnswer("Receiving Party Address")}</p>
-    <p class="paragraph_br">Throughout the duration of this
-    Agreement, the Disclosing Party may deem it necessary to disclose or share
-    certain proprietary information with the Recipient. Therefore, in consideration
-    of the mutual promises and covenants contained within this Agreement, and other
-    good and valuable consideration, the receipt and sufficiency of which is hereby
-    acknowledged, both parties hereto agree as follows:</p>
-
+    
 <p class="paragraph_title">Confidential Information</p>
 
 <p class="paragraph">For all intents and purposes of
@@ -97,7 +85,7 @@ governed by Federal Rule of Evidence 408 – Compromise Offers and Negotiations.
 <p class="paragraph">Notwithstanding anything in the foregoing clauses to the contrary, the Receiving Party may be compelled to disclose Confidential 
 Information pursuant to any governmental, judicial, or administrative order, subpoena, discovery request, regulatory request or similar method, provided that the Receiving Party 
 promptly notifies, to the extent feasible, the Disclosing Party in writing of any such demand for disclosure so that the Disclosing Party, at its sole expense, may seek to make 
-such disclosure subject to a protective order or other appropriate remedy to preserve the confidentiality of the Confidential Information; .</p>
+such disclosure subject to a protective order or other appropriate remedy to preserve the confidentiality of the Confidential Information;</p>
 
 <p class="sub_paragraph">
 provided in the case of a broad 
@@ -107,21 +95,28 @@ The Receiving Party agrees that it shall not oppose and shall cooperate with eff
 protective order or other relief. Notwithstanding the foregoing, if the Disclosing Party is unable to obtain or does not seek a protective order and the Receiving Party is 
 legally requested or required to disclose such Confidential Information, disclosure of such Confidential Information may be made without liability</p>
 
+  `;
+}
+function IndependentDevelopment(findAnswer: FindAnswerFn): string {
+  const AgreementDuration = findAnswer("Agreement Duration")
+  const GoverningLawState = findAnswer("Governing Law State")
+  const JurisdictionLocation = findAnswer("Jurisdiction Location")
+  return `
+    
 <p class="paragraph_title">Independent Development</p>
 <p class="paragraph">Receiving Party may currently or in the future be developing information internally, or receiving information internally, 
 or receiving information from other parties that may be similar to the Disclosing Party's Confidential Information. Accordingly, 
 nothing in this Agreement will be construed as a representation or inference that Receiving Party will not develop or have developed products or services, 
-that, without violation of this Agreement, might compete with the products or systems contemplated by the Disclosing Party's Confidential Information..</p>
+that, without violation of this Agreement, might compete with the products or systems contemplated by the Disclosing Party's Confidential Information.</p>
 
 <p class="paragraph_title">Term</p>
-<p class="paragraph">The herein contained Agreement shall remain in effect . Notwithstanding the foregoing, the parties' duties to maintain in confidence any and all Confidential Information that may have been disclosed during the term shall thus remain in effect indefinitely.</p>
-
+<p class="paragraph">The herein contained Agreement shall remain in effect ${AgreementDuration}. Notwithstanding the foregoing, the parties' duties to maintain in confidence any and all Confidential Information that may have been disclosed during the term shall thus remain in effect indefinitely.</p>
 <p class="paragraph_title">No Warranty</p>
 <p class="paragraph">All Confidential Information is provided by Disclosing Party "AS IS" and without any warranty, express, implied or otherwise, regarding the Confidential Information's completeness, accuracy or performance.
 </p>
 
 <p class="paragraph_title">Remedies</p>
-<p class="paragraph">Both parties to this Agreement acknowledge and agree that the Confidential Information hereunder this Agreement is of a unique and valuable nature, and that the unauthorized distribution or broadcasting of the Confidential Information could have the potential to destroy and, at the very least, diminish the value of such information. The damages that the Disclosing Party could sustain as a direct result of the unauthorized dissemination of the Confidential Information would be impossible to calculate. Therefore, both parties hereby agree that the Disclosing Party shall be entitled to claim injunctive relief that would prevent the dissemination of any Confidential Information that would be in violation of the terms set forth herein this Agreement. Any such injunctive relief provided shall be in addition to any other available remedies hereunder, whether at law or in equity. The Disclosing Party shall be entitled to recover any sustained costs and/or fees, including, but not limited to, any reasonable attorney's fees which may be incurred while attempting to obtain any such relief. Furthermore, in the event of any litigation which may be related to this Agreement, the prevailing party shall be entitled to recover any such reasonable attorney's fees and expenses incurred.</p>
+<p class="paragraph">Both parties acknowledge that the Confidential Information shared under this Agreement is unique and valuable. Unauthorized use or disclosure could cause serious harm, including loss of value. The Disclosing Party is entitled to seek injunctive relief to prevent further breaches, in addition to any other remedies available under law or equity, including recovery of reasonable attorney’s fees. In any legal proceeding, the prevailing party may also recover reasonable legal expenses.</p>
 
 <p class="paragraph_title">Return of Confidential Information</p>
 <p class="paragraph">Upon completion/expiration or termination of this Agreement, the Receiving Party shall immediately return and deliver to the Disclosing Party all tangible material and/or information representing or exemplifying the Confidential Information provided hereunder and all notes, summaries, memoranda, drawings, manuals, records, excerpts or derivative information deriving therefrom and all other documents, materials, notes or copies ("Notes") which may have been converted to any computerized media in the form of any image, data or word processing files either manually or by image capture or any other form of work product that may be based on or include any Confidential Information, in whatever form of storage or retrieval, upon the earlier of (i) the completion or termination of this Agreement or (ii) at such time as the Disclosing Party may so request; provided however that the Receiving Party may retain such of its documents as is necessary to enable it to comply with its document retention policies. Alternatively, with the prior written consent of the Disclosing Party, the Receiving Party may immediately destroy (in the case of Notes, at the Receiving Party's sole discretion) any of the foregoing embodying Confidential Information (or the reasonably non-recoverable data erasure of computerized data) and, upon request, certify in writing such destruction by an authorized officer of the Receiving Party supervising the destruction of the material and or information.</p>
@@ -142,9 +137,8 @@ that, without violation of this Agreement, might compete with the products or sy
  </p>
 
 <p class="paragraph_title">Governing Laws</p>
-<p class="paragraph">The validity, construction and performance of this Agreement shall be governed and construed in accordance with the laws of or any applicable federal laws or statutes applicable to contracts made and to be wholly performed within such state, without giving effect to any form of conflict of law provisions thereof. The Federal and State courts located in shall have sole and exclusive jurisdiction over any disputes arising under the terms of this Agreement.
-
-</p>
+<p class="paragraph">The validity, construction and performance of this Agreement shall be governed and construed in accordance with the laws of ${GoverningLawState} or any applicable federal laws or statutes applicable to contracts made and to be wholly performed within such state, without giving effect to any form of conflict of law provisions thereof. The Federal and State courts located in 
+${JurisdictionLocation} shall have sole and exclusive jurisdiction over any disputes arising under the terms of this Agreement.</p>
 
 <p class="paragraph_title">Waiver of Contractual Right</p>
 <p class="paragraph">Any such failure by either party to enforce the other party's strict performance of any provision of this Agreement shall not constitute a waiver of its right to subsequently enforce such provision or any other provision of this Agreement.
@@ -167,12 +161,66 @@ that, without violation of this Agreement, might compete with the products or sy
 <p class="paragraph">The receipt of Confidential Information pursuant to this Agreement shall not prevent or in any way limit either party from: (i) developing, making or marketing products or services that are or may be competitive with the products or services of the other, or (ii) providing products or services to other who compete with the other.
 </p>
 
+ `;
+}
+// Signatures.ts
+export function Signatures(findAnswer: FindAnswerFn): string {
+  const disclosingName = findAnswer("Disclosing Party Representative Name");
+  const disclosingTitle = findAnswer("Disclosing Party Representative Title");
+  const disclosingDate = findAnswer("Disclosing Party Signature Date");
+
+  const receivingName = findAnswer("Receiving Party Representative Name");
+  const receivingTitle = findAnswer("Receiving Party Representative Title");
+  const receivingDate = findAnswer("Receiving Party Signature Date");
+
+  return `
+    <p class="paragraph_title">Signatures</p>
+
+    <p class="paragraph">
+      Disclosing Party: _________________________<br />
+      Name: ${disclosingName}<br />
+      Title: ${disclosingTitle}<br />
+      Date: ${disclosingDate}
+    </p>
+
+    <p class="paragraph">
+      Receiving Party: _________________________<br />
+      Name: ${receivingName}<br />
+      Title: ${receivingTitle}<br />
+      Date: ${receivingDate}
+    </p>
+  `;
+}
+
+export function NDALayout(
+  data: ContractData,
+  findAnswer: FindAnswerFn
+): string {
+  const agreementDate = findAnswer("Agreement Date");
+  const disclosingPartyName = findAnswer("Disclosing Party Name");
+  const disclosingPartyAddress = findAnswer("Disclosing Party Address");
+  const receivingPartyName = findAnswer("Receiving Party Name");
+  const receivingPartyAddress = findAnswer("Receiving Party Address");
+  return `
+    <p class="paragraph">
+      This Non-Disclosure Agreement ("Agreement") is entered into as of ${agreementDate} between:
+    </p>
+    <p class="paragraph">Disclosing Party: ${disclosingPartyName}, located at ${disclosingPartyAddress}</p>
+    <p class="paragraph">Receiving Party: ${receivingPartyName}, located at ${receivingPartyAddress}</p>
+    <p class="paragraph_br">Throughout the duration of this
+    Agreement, the Disclosing Party may deem it necessary to disclose or share
+    certain proprietary information with the Recipient. Therefore, in consideration
+    of the mutual promises and covenants contained within this Agreement, and other
+    good and valuable consideration, the receipt and sufficiency of which is hereby
+    acknowledged, both parties hereto agree as follows:</p>
+${ConfidentialInformationSection(findAnswer)}
+${IndependentDevelopment(findAnswer)}
 <p class="paragraph">Paragraph headings used in this Agreement are for reference only and shall not be used or relied upon in the interpretation of this Agreement.
 </p>
 
 <p class="paragraph"><strong>IN WITNESS WHEREOF</strong>, the parties hereto have executed this Agreement as of the aforementioned effective date.
 </p>
-
-  `
+${Signatures(findAnswer)}
+  `;
   //  + generateClosingSections(findAnswer, "NDA");
 }

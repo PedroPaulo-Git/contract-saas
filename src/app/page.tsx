@@ -18,17 +18,18 @@ export default function Home() {
     setShowPopup(true);
   }
 
-  function onSelectService(service: string) {
-    const id = Date.now();
-    router.push(`/contract/${id}?service=${service}&layout=${layout}`);
-  }
+ function onSelectService({ service, layout }: { service: string; layout: string }) {
+  const id = Date.now();
+  router.push(`/contract/${id}?service=${encodeURIComponent(service)}&layout=${encodeURIComponent(layout)}`);
+}
+
 
   return (
     <>
     <Header />
     <div className="p-6 bg-[#14213d] text-white">
     
-      <h1 className="text-2xl mb-4">Gere seu PDF gratuitamente</h1>
+      {/* <h1 className="text-2xl mb-4">Gere seu PDF gratuitamente</h1>
       <TextInputBox value={text} onChange={setText} />
       <div className="text-center">
         <button
@@ -38,16 +39,16 @@ export default function Home() {
         >
           Iniciar contrato
         </button>
-      </div>
+      </div> */}
 
-      <LayoutSelector onSelect={setLayout} />
+      <LayoutSelector onSelectService={onSelectService} />
 
-      {showPopup && (
+      {/* {showPopup && (
         <PopupServiceSelector
           onSelect={onSelectService}
           onClose={() => setShowPopup(false)}
         />
-      )}
+      )} */}
     </div>
     <Footer/>
     </>

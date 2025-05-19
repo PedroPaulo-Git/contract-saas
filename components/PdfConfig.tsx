@@ -60,6 +60,14 @@ export default function PdfConfig({ onConfigChange }: Props) {
         return updated;
       });
     };
+  const reset =(()=>{
+    setUnderlineH1(false)
+    setH1Size(22)
+    setH2Size(14)
+    setReceiveSize(12)
+  })
+   
+
 
   const renderInput = (
     label: string,
@@ -140,13 +148,13 @@ export default function PdfConfig({ onConfigChange }: Props) {
             <div className="flex justify-center items-center gap-5">
               <button
                 onClick={() => setIsPopupOpen(false)}
-                className="mt-4 px-4 py-2 bg-green-600 rounded hover:bg-green-500"
+                className="mt-4 px-4 py-2 bg-indigo-600 rounded"
               >
                 Apply
               </button>
               <button
-                onClick={() => setIsPopupOpen(false)}
-                className="mt-4 px-4 py-2 bg-yellow-600 rounded hover:bg-yellow-500"
+                onClick={reset}
+                className="mt-4 px-4 py-2 bg-yellow-600 rounded "
               >
                 Reset
               </button>

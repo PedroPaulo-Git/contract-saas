@@ -4,20 +4,21 @@ import pdf2 from '../pdf2.webp';
 import pdf3 from '../pdf3.png';
 
 interface Props {
-  onSelect: (layout: string) => void;
+  onSelectService: (data: { service: string; layout: string }) => void;
 }
+
 
 const layouts = [
   {
-    name: 'Default',
+    name: 'Essay (Free Writing)',
     service: 'Default',
-    preview: 'This contract is made between Party A and Party B. The terms and conditions are as follows...',
+    preview: 'Write a personalized document without predefined structure or legal format.',
     pdf: pdf1
   },
   {
-    name: 'Service Agreement',
+    name: 'Freelance Agreement',
     service: 'Service',
-    preview: 'This contract is made between Party A and Party B. The terms and conditions are as follows...',
+    preview: 'For freelance projects, covering scope, deadlines, and payment terms.',
     pdf: pdf1
   },
   {
@@ -34,46 +35,37 @@ const layouts = [
   },
 ];
 
-export default function LayoutSelector({ onSelect }: Props) {
+export default function LayoutSelector({ onSelectService }: Props) {
   const [layoutSelected, setLayoutSelected] = useState<string>('Default');
-  useEffect(() => {
-    //console.log(layoutSelected)
-    onSelect(layoutSelected);
-  }, []); // Esse effect só roda uma vez, após a primeira renderização
+  // useEffect(() => {
+  //   //console.log(layoutSelected)
+  //   onSelectService(layoutSelected);
+  // }, []); // Esse effect só roda uma vez, após a primeira renderização
 
-  function handleClick(service:string) {
-    // if(name != "Default"){
-    //   console.log("isnt a Essay ")
-    //   setLayoutSelected("Legal");
-    //   onSelect("Legal");
-    // }else{
-    //   setLayoutSelected(name);
-    //   onSelect(name);
-    // }
-    console.log(layoutSelected)
-    // const convertLayout = name;
-
-    setLayoutSelected(service);
-    onSelect(service);
-   // console.log(name)
-  }
+ function handleClick( layout: string,service: string,) {
+  setLayoutSelected(layout);
+  onSelectService({ layout ,service });
+}
 
   return (
     <>
     <h1 className='text-center text-2xl mt-4'>Select a Layout </h1>
     <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
      
-      
+     
       {layouts.map(l => (
         <div
           key={l.name}
           className="p-0 bg-[#14213d] rounded-lg cursor-pointer transform transition duration-200 text-center hover:scale-105 hover:shadow-2xl"
-          onClick={() => handleClick(l.service)}
+          onClick={() => handleClick(l.service, l.name)}
+          
         >
-          {/* <h4 className="text-sm font-semibold mb-4">{l.name}</h4> */}
+          <h4 className="text-sm font-semibold mb-4">{l.name}</h4>
 
           <div className={`relative bg-white p-4 rounded-lg w-full h-[2in] max-w-[1.5in] mx-auto shadow-md
-            border-4 ${layoutSelected === l.service ? 'border-red-500' : 'border-gray-300'}`}>
+            border-4 
+            ${layoutSelected === l.service ? 'border-gray-300' : 'border-gray-300'}
+            `}>
             <div className="absolute inset-0 rounded-md">
               <div className="h-full text-sm relative">
                 <h5 className="font-semibold text-lg mb-4 absolute top-1/2 left-1/2 transform 
@@ -84,6 +76,7 @@ export default function LayoutSelector({ onSelect }: Props) {
               </div>
             </div>
           </div>
+          <h4 className='text-xs text-gray-200 mt-2'>{l.preview}</h4>
         </div>
       ))}
     </div>
