@@ -1,6 +1,8 @@
 import { FindAnswerFn } from "../generateLayoutContent";
 import { ContractData } from "../../../types";
 function ConfidentialInformationSection(findAnswer: FindAnswerFn): string {
+  const UsingProps = findAnswer("Agreement Duration")
+  console.log(UsingProps)
   return `
     
 <p class="paragraph_title">Confidential Information</p>

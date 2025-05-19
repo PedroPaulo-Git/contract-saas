@@ -9,14 +9,15 @@ import { useRouter } from "next/navigation";
 import Footer from "../../components/Footer";
 
 export default function Home() {
-  const [text, setText] = useState("");
-  const [layout, setLayout] = useState<string | null>(null);
-  const [showPopup, setShowPopup] = useState(false);
   const router = useRouter();
+  // const [text, setText] = useState("");
+  // const [layout, setLayout] = useState<string | null>(null);
+  // const [showPopup, setShowPopup] = useState(false);
+  // c
 
-  function handleStart() {
-    setShowPopup(true);
-  }
+  // function handleStart() {
+  //   setShowPopup(true);
+  // }
 
  function onSelectService({ service, layout }: { service: string; layout: string }) {
   const id = Date.now();

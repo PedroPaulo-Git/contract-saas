@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import pdf1 from '../pdf1.webp';
 import pdf2 from '../pdf2.webp';
 import pdf3 from '../pdf3.png';
