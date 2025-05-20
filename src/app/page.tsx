@@ -29,27 +29,10 @@ export default function Home() {
     <>
     <Header />
     <div className="p-6 bg-[#14213d] text-white">
-    
-      {/* <h1 className="text-2xl mb-4">Gere seu PDF gratuitamente</h1>
-      <TextInputBox value={text} onChange={setText} />
-      <div className="text-center">
-        <button
-          disabled={!layout}
-          onClick={handleStart}
-          className="mt-4 px-4 py-2 bg-accent rounded bg-blue-500 mx-auto"
-        >
-          Iniciar contrato
-        </button>
-      </div> */}
+
 
       <LayoutSelector onSelectService={onSelectService} />
 
-      {/* {showPopup && (
-        <PopupServiceSelector
-          onSelect={onSelectService}
-          onClose={() => setShowPopup(false)}
-        />
-      )} */}
     </div>
     <Footer/>
     </>

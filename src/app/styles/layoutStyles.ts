@@ -2,6 +2,20 @@ import { PdfSettings } from "../../../components/PdfConfig";
 
 const getGlobalStyles = (isPDF: boolean, config: PdfSettings): string => {
   return `
+
+.signature-image {
+  border: 1px solid #ddd !important;
+  background-color: white !important;
+  padding: 5px !important;
+  margin: 10px 0 !important;
+}
+
+.signature-container {
+  position: relative;
+  z-index: 1000;
+  background: white;
+  page-break-inside: avoid;
+}
 * {
   box-sizing: border-box;
 }
@@ -21,6 +35,9 @@ const getGlobalStyles = (isPDF: boolean, config: PdfSettings): string => {
   }
     .section {
   page-break-inside: avoid;
+}
+  .section2 {
+    page-break-before: always;
 }
 .page-break {
     page-break-before: always;
@@ -50,9 +67,7 @@ const layoutStyles = (layout: string, isPDF: boolean, config: PdfSettings): stri
           font-family: Georgia, serif;
         
         }
-        .layout-style h1 {
-          color: red;
-        }
+     
           .footer{
             color:#cccccc;
           }
@@ -68,7 +83,7 @@ const layoutStyles = (layout: string, isPDF: boolean, config: PdfSettings): stri
     case "NDA":
       specificStyle = `
         .layout-style {
-          font-family: Times New Roman, sans-serif;
+          font-family: Times New Roman;
         }
           .paragraph{
          margin:0px;
@@ -79,8 +94,6 @@ const layoutStyles = (layout: string, isPDF: boolean, config: PdfSettings): stri
        
          }
           .paragraph_title{
-          // margin:0px;
-          // padding:0px;
          margin-top:26px;
            margin-bottom:0px;
           font-style: italic;
@@ -88,25 +101,51 @@ const layoutStyles = (layout: string, isPDF: boolean, config: PdfSettings): stri
           font-weight: bold;
           }
         .layout-style h1 {
-          color: ${isPDF ? "black" : "darkred"};
+          color: ${isPDF ? "black" : "black"};
         }
         
       `;
       break;
     case "IP":
       specificStyle = `
+      .signature-image {
+      background-color: white !important;
+      border: 1px solid #ddd !important;
+      padding: 5px !important;
+      page-break-inside: avoid !important;
+    }
+    .signature-block {
+      page-break-inside: avoid !important;
+    }
+    /* Add this to your existing IP layout styles */
+    ${layout === 'IP' ? `
+      .contract-content {
+        font-family: 'Times New Roman', serif;
+        line-height: 1.5;
+      }
+      .paragraph_title {
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+    ` : ''}
         .layout-style {
           font-family: 'Courier New', monospace;
         }
         .layout-style h1 {
-          color: ${isPDF ? "black" : "darkgreen"};
+          color: ${isPDF ? "black" : "black"};
+          font-size: ${isPDF ? "1.5rem" : "1rem"};
+        }
+        .receive.layout-style{
+         font-size: ${isPDF ? "0.8rem" : "0.6rem"};
+         color: ${isPDF ? "black" : "black"};
         }
       `;
       break;
     default:
       specificStyle = `
         .layout-style h1 {
-          color: ${isPDF ? "black" : "darkgreen"};
+          color: ${isPDF ? "black" : "black"};
         }
       `;
   }
