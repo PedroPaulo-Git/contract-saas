@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+
+body{
+  background-color:#14213d;
+}
 .signature-input-container {
   margin: 20px 0;
   min-height: 120px;
