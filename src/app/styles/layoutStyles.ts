@@ -22,6 +22,7 @@ const getGlobalStyles = (isPDF: boolean, config: PdfSettings): string => {
     .pdf {
       color: black;
      padding: ${isPDF ? "0.5cm" : "1.5cm"};
+     
     }
  
  .paragraph {

@@ -55,16 +55,16 @@ export function IPLayout(data: ContractData, findAnswer: FindAnswerFn): string {
       <!-- Add signature block at the end of content -->
       <div style="margin-top: 40px; page-break-before: avoid;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 60px;">
-          <div style="width: 45%;">
+          <div">
             ${clientSignature 
               ? `<img src="${clientSignature}" style="height: 80px; display: block;" />` 
-              : `<div style="border-bottom: 1px solid black; width: 200px; background-color:black;">!11111111111111</div>`}
+              : `<div style="border-bottom: 1px solid black; background-color:black;">!11111111111111</div>`}
             <p style="margin-top: 8px;">Client Signature</p>
             <p>Date: __________________</p>
           </div>
           
-          <div style="width: 45%;">
-            <div style="border-bottom: 1px solid black; width: 200px;"></div>
+          <div">
+            <div style="border-bottom: 1px solid black; "></div>
             <p style="margin-top: 8px;">Licensor Signature</p>
             <p>Date: __________________</p>
           </div>

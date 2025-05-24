@@ -1,41 +1,9 @@
 import React, { useState } from "react";
-import pdf1 from "../pdf1.webp";
-import pdf2 from "../pdf2.webp";
-import pdf3 from "../pdf3.png";
+import { layouts } from "../src/data/layoutsData";
 
 interface Props {
   onSelectService: (data: { service: string; layout: string }) => void;
 }
-
-const layouts = [
-  {
-    name: "Essay (Free Writing)",
-    service: "Default",
-    preview:
-      "Write a personalized document without predefined structure or legal format.",
-    pdf: pdf1,
-  },
-  {
-    name: "Freelance Agreement",
-    service: "Service",
-    preview:
-      "For freelance projects, covering scope, deadlines, and payment terms.",
-    pdf: pdf1,
-  },
-  {
-    name: "Non-Disclosure Agreement (NDA)",
-    service: "NDA",
-    preview:
-      "This agreement is made for the sale of goods. The seller agrees to deliver the goods as described...",
-    pdf: pdf2,
-  },
-  {
-    name: "Intellectual Property License Agreement",
-    service: "IP",
-    preview: "Preview of contract C...",
-    pdf: pdf3,
-  },
-];
 
 export default function LayoutSelector({ onSelectService }: Props) {
   const [layoutSelected, setLayoutSelected] = useState<string>("Default");

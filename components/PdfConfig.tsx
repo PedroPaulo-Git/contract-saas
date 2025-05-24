@@ -60,14 +60,12 @@ export default function PdfConfig({ onConfigChange }: Props) {
         return updated;
       });
     };
-  const reset =(()=>{
-    setUnderlineH1(false)
-    setH1Size(22)
-    setH2Size(14)
-    setReceiveSize(12)
-  })
-   
-
+  const reset = () => {
+    setUnderlineH1(false);
+    setH1Size(22);
+    setH2Size(14);
+    setReceiveSize(12);
+  };
 
   const renderInput = (
     label: string,
@@ -108,23 +106,28 @@ export default function PdfConfig({ onConfigChange }: Props) {
   return (
     <div className="">
       {/* Exibe o ícone de configurações se a tela for menor que 600px */}
-      {isMobile && (
-        <button
-          onClick={() => setIsPopupOpen(true)}
-          className="p-2 bg-[#415a77] rounded-full"
-        >
-          <IoIosSettings />
-        </button>
-      )}
+
+      <button
+        onClick={() => {
+          setIsPopupOpen(true);
+          document.body.style.overflow = "hidden";
+        }}
+        className="p-2 bg-[#415a77] rounded-full"
+      >
+        <IoIosSettings />
+      </button>
 
       {/* Exibe o popup de configurações */}
       {isPopupOpen && (
-        <div className=" absolute top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center text-center">
-          <div className=" bg-[#1e293b] p-6 rounded-lg text-white max-w-sm w-full z-10  ">
+        <div className="fixed inset-0 z-20 flex items-center justify-center">
+          {/* Fundo escuro com opacidade */}
+          <div className="absolute inset-0 bg-[rgba(0,0,0,0.6)] z-10"></div>
+
+          {/* Conteúdo do popup */}
+          <div className="bg-[#1e293b] px-12 py-4 rounded-lg text-white w-80 z-20 relative">
             <h3 className="text-lg font-semibold mb-4">Configurações de PDF</h3>
 
             {renderInput("Tamanho do título (h1):", h1Size, setH1Size)}
-
 
             <div className="flex items-center justify-center gap-2 mt-4">
               <input
@@ -147,7 +150,10 @@ export default function PdfConfig({ onConfigChange }: Props) {
             )}
             <div className="flex justify-center items-center gap-5">
               <button
-                onClick={() => setIsPopupOpen(false)}
+                onClick={() => {
+                  setIsPopupOpen(false);
+                  document.body.style.overflow = "";
+                }}
                 className="mt-4 px-4 py-2 bg-indigo-600 rounded"
               >
                 Apply

@@ -160,69 +160,6 @@ export default function PdfPreview({
       });
   };
 
-// const handleDownload = async () => {
-//   if (!pdfRef.current) return;
-//   setIsGenerating(true);
-  
-//   // Create a temporary div with the content
-//   const tempDiv = document.createElement("div");
-//   tempDiv.innerHTML = getContractContent(true);
-//   tempDiv.style.visibility = 'hidden';
-//   document.body.appendChild(tempDiv);
-
-//   // Wait for images to load
-//   await new Promise(resolve => {
-//     const images = tempDiv.querySelectorAll('img');
-//     let loaded = 0;
-    
-//     if (images.length === 0) {
-//       resolve(true);
-//       return;
-//     }
-
-//     images.forEach(img => {
-//       if (img.complete) {
-//         loaded++;
-//       } else {
-//         img.onload = () => {
-//           loaded++;
-//           if (loaded === images.length) resolve(true);
-//         };
-//         img.onerror = () => {
-//           loaded++;
-//           if (loaded === images.length) resolve(true);
-//         };
-//       }
-//     });
-//   });
-
-//   const opt = {
-//     margin: [10, 10, 10, 10],
-//     filename: `Contract_${service}_${id}.pdf`,
-//     image: { type: 'jpeg', quality: 0.98 },
-//     html2canvas: { 
-//       scale: 2,
-//       logging: true,
-//       useCORS: true,
-//       allowTaint: true
-//     },
-//     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-//     pagebreak: { mode: ['css', 'legacy'] }
-//   };
-
-//   try {
-//     await html2pdf()
-//       .set(opt)
-//       .from(tempDiv)
-//       .save();
-//   } catch (error) {
-//     console.error('PDF generation error:', error);
-//   } finally {
-//     document.body.removeChild(tempDiv);
-//     setIsGenerating(false);
-//   }
-// };
-
   return (
     <div className="w-full flex flex-col items-center gap-4">
       {/* Preview container */}
@@ -235,17 +172,21 @@ export default function PdfPreview({
           border: "1px solid #ccc",
           borderRadius: "8px",
           overflow: "auto",
+          overflowX:"hidden",
           backgroundColor: "white",
         }}
       >
         <div
           ref={pdfRef}
           dangerouslySetInnerHTML={{ __html: getContractContent() }}
-          style={{
-            transform: "scale(1)",
-            // // transformOrigin: "top left",
-            width: "100%",
-            height: "100%",
+           style={{
+            // Shrink the content view to 50% (0.5). You can adjust this number (e.g., 0.55, 0.6) if needed.
+            transform: "scale(0.9)", 
+            // Start shrinking from the top-left corner.
+            transformOrigin: "top left",
+            // Make the element itself larger before shrinking, so the scaled content fills the container.
+            width: "110%", 
+            height: "200%",
           }}
         />
       </div>
